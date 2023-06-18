@@ -50,6 +50,10 @@ export interface ITaxonomy {
 export interface ILogin {
   email: string;
   password: string;
+  error?: string;
+  loading?: boolean;
+  token?: string;
+  status?: number;
 }
 
 export interface IRegister {
@@ -57,6 +61,10 @@ export interface IRegister {
   email: string;
   password: string;
   password_confirmation: string;
+  error?: string;
+  loading?: boolean;
+  token?: string;
+  status?: number;
 }
 
 export interface IAuth {

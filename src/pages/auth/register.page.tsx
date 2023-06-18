@@ -15,11 +15,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 type FormData = {
+  name: string;
   email: string;
   password: string;
+  confirm_password: string;
 };
 
-function Login() {
+function Register() {
   const {
     register,
     setValue,
@@ -38,7 +40,7 @@ function Login() {
     );
     const res = await apolloMutation(`
     mutation{
-        signIn(email:"${data.email}", password:"${data.password}}"){
+        signUp(name:"${data.name}", email:"${data.email}", password:"${data.password}, confirm_password:"${data.confirm_password}"){
           error
           token
           status
@@ -50,10 +52,10 @@ function Login() {
       authAction.auth({
         loading: false,
         error:
-          res.data?.signIn?.error &&
-          "Sorry, we couldn't find an account with that email and password. Please try again.",
-        token: res.data?.signIn?.token,
-        status: res.data?.signIn?.status,
+          res.data?.signUp?.error &&
+          "Sorry, be sure to fill all the fields. Please try again.",
+        token: res.data?.signUp?.token,
+        status: res.data?.signUp?.status,
       })
     );
   });
@@ -81,23 +83,30 @@ function Login() {
         >
           <Box sx={{ width: "54%", margin: "auto" }}>
             <Typography variant="h2" sx={{ textAlign: "center", my: 3 }}>
-              Welcome to Talula
+              Sign Up to Talula
             </Typography>
 
             <Typography variant="body1" sx={{ textAlign: "center", my: 3 }}>
-              Our platform collects articles from newspapers, blogs, and other
-              news websites, and organizes them into categories to make it easy
-              for you to find the stories that interest you most.
+              to get access to all the features
             </Typography>
 
             {displayAlert()}
 
             <Box component="form" onSubmit={onSubmit} sx={{ my: 3 }}>
               <TextField
+                id="name"
+                label="name"
+                type="text"
+                sx={{ width: "100%", mb: 2 }}
+                disabled={state.auth?.loading}
+                {...register("email")}
+                required
+              />
+              <TextField
                 id="email"
                 label="email"
                 type="email"
-                sx={{ width: "100%" }}
+                sx={{ width: "100%", mb: 2 }}
                 disabled={state.auth?.loading}
                 {...register("email")}
                 required
@@ -106,9 +115,18 @@ function Login() {
                 id="password"
                 label="Password"
                 type="password"
-                sx={{ width: "100%", my: 2 }}
+                sx={{ width: "100%", mb: 2 }}
                 disabled={state.auth?.loading}
                 {...register("password")}
+                required
+              />
+              <TextField
+                id="confirm_password"
+                label="confirm Password"
+                type="password"
+                sx={{ width: "100%", mb: 2 }}
+                disabled={state.auth?.loading}
+                {...register("confirm_password")}
                 required
               />
               <Button
@@ -123,9 +141,9 @@ function Login() {
                 )}
               </Button>
 
-              <Link href="/auth/register" style={{ textDecoration: "none" }}>
+              <Link href="/auth/login" style={{ textDecoration: "none" }}>
                 <Typography variant="body2" sx={{ textAlign: "center", my: 3 }}>
-                  {"Don't have an account? Register here"}
+                  {"Already have an account? Login"}
                 </Typography>
               </Link>
             </Box>
@@ -135,7 +153,7 @@ function Login() {
           sx={{
             width: "50%",
             height: "97vh",
-            backgroundImage: "url(/login.jpeg)",
+            backgroundImage: "url(/signup.jpeg)",
             backgroundSize: "cover",
             backgroundPosition: "center",
             display: { md: "block", xs: "none" },
@@ -146,4 +164,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;
