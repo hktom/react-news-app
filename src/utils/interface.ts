@@ -46,3 +46,4 @@ export interface ITaxonomy {
   parent?: ITaxonomy;
   children?: ITaxonomy[];
 }
+
