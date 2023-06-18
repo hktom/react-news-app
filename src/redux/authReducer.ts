@@ -1,13 +1,13 @@
 import { IAuth, ILogin, IRegister } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IState {
+export interface IAuthState {
   login?: ILogin;
   register?: IRegister;
   auth?: IAuth;
 }
 
-export const initialState: IState = {
+export const initialState: IAuthState = {
   login: undefined,
   register: undefined,
   auth: undefined,
@@ -18,13 +18,13 @@ export const authReducer: any = createSlice({
   initialState,
   reducers: {
     login: (state, { payload }) => {
-      state.login = payload.posts;
+      state.login = payload;
     },
     register: (state, { payload }) => {
-      state.register = payload.posts;
+      state.register = payload;
     },
     auth: (state, { payload }) => {
-      state.auth = payload.posts;
+      state.auth = payload;
     },
   },
 });

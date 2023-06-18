@@ -1,11 +1,11 @@
 import { IArticle } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IState {
+export interface IFeedState {
   articles: IArticle[];
 }
 
-export const initialState: IState = {
+export const initialState: IFeedState = {
   articles: [],
 };
 

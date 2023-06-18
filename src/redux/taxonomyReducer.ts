@@ -1,11 +1,11 @@
 import { ISetting, ITaxonomy, IUser } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IState {
+export interface ITaxonomyState {
   taxonomies?: ITaxonomy[];
 }
 
-export const initialState: IState = {
+export const initialState: ITaxonomyState = {
   taxonomies: undefined,
 };
 

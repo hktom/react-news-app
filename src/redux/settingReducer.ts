@@ -1,11 +1,11 @@
 import { ISetting, ITaxonomy, IUser } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-interface IState {
+export interface ISettingState {
   settings?: ISetting;
 }
 
-export const initialState: IState = {
+export const initialState: ISettingState = {
   settings: undefined,
 };
 
