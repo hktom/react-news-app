@@ -1,6 +1,7 @@
 import { ThunkAction, Action } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import store from "../redux/store";
+import { IReducer } from "./rootReducer";
 
 export type AppState = ReturnType<typeof store.getState>;
 
