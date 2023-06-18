@@ -47,3 +47,21 @@ export interface ITaxonomy {
   children?: ITaxonomy[];
 }
 
+export interface ILogin {
+  email: string;
+  password: string;
+}
+
+export interface IRegister {
+  name: string;
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
+export interface IAuth {
+  error?: string;
+  loading?: boolean;
+  token?: string;
+  status?: number;
+}
