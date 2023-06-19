@@ -39,11 +39,11 @@ export interface IArticle {
 }
 
 export interface ITaxonomy {
-  id: string;
-  name: string;
-  type: string;
+  id?: string;
+  name?: string;
+  type?: string;
   slug?: string;
-  user: IUser;
+  user?: IUser;
   parent?: ITaxonomy;
   children?: ITaxonomy[];
 }

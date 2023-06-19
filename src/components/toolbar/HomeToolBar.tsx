@@ -8,10 +8,12 @@ import ListIcon from "@mui/icons-material/List";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuDisposition from "./MenuDisposition";
+import { useRouter } from "next/router";
 
 function HomeToolBar() {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state: IReducer) => state);
+  const router = useRouter();
 
   const buttons: IButtonProps[] = [
     {
@@ -32,7 +34,7 @@ function HomeToolBar() {
     {
       title: "Search Articles",
       children: <SearchIcon />,
-      onClick: () => {},
+      onClick: () => router.push("/me/search"),
     },
     {
       title: "Refresh",

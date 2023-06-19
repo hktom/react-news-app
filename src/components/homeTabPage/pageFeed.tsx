@@ -7,12 +7,13 @@ import SimpleLoading from "../SimpleLoading";
 
 interface IProps {
   feeds: IArticle[];
+  loading?: boolean;
 }
 
 function PageFeed(props: IProps) {
   const state = useAppSelector((state: IReducer) => state);
 
-  if (state.feed?.loading) return <SimpleLoading />;
+  if (props.loading) return <SimpleLoading />;
 
   if (state.setting?.disposition === 1) {
     return (

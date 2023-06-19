@@ -6,6 +6,7 @@ import taxonomyReducer, { ITaxonomyState } from "@/redux/taxonomyReducer";
 import userReducer, { IUserState } from "@/redux/userReducer";
 import menuReducer, { IMenuState } from "@/redux/menuReducer";
 import { ISetting } from "./interface";
+import searchReducer, { ISearchState } from "@/redux/searchReducer";
 
 export interface IReducer {
   feed: IFeedState;
@@ -14,6 +15,7 @@ export interface IReducer {
   setting: ISetting;
   auth: IAuthState;
   menu: IMenuState;
+  search: ISearchState;
 }
 
 export const rootReducer = combineReducers({
@@ -23,6 +25,7 @@ export const rootReducer = combineReducers({
   setting: settingReducer,
   auth: authReducer,
   menu: menuReducer,
+  search: searchReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
