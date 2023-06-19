@@ -23,30 +23,27 @@ function CCard(props: IProps) {
     >
       <CardMedia
         component="img"
-        sx={{ width: "100%", height: 140, borderRadius: 2 }}
+        sx={{ width: "100%", height: 200, borderRadius: 2 }}
         image={props.article?.image}
         alt={props.article?.title}
       />
 
       <Box>
-        <Typography variant="h4" component="h2" sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          component="h2"
+          sx={{ fontWeight: "bold", fontSize: "1.1rem", my: 2 }}
+        >
           {props.article?.title}
         </Typography>
 
-        <Box sx={{ display: "flex" }}>
-          <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-            {props.article?.source_name ?? props.article?.category_name}
-          </Typography>
+        <Typography variant="body2" component="span">
+          {props.article?.source_name ?? props.article?.category_name}
+          {props.ago && ` / ${props.ago}`}
+        </Typography>
 
-          {props.ago && (
-            <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-              / {props.ago}
-            </Typography>
-          )}
-        </Box>
-
-        <Typography variant="h4" component="p" sx={{ flexGrow: 1 }}>
-          {props.article?.description}
+        <Typography variant="body1" component="p">
+          {props.article?.description ?? "..."}
         </Typography>
       </Box>
     </Box>

@@ -15,6 +15,7 @@ export interface ISetting {
   notification?: number;
   showByPage?: number;
   feed_by?: string;
+  loading?: boolean;
 }
 
 export interface IArticle {

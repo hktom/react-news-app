@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 
 import SimpleBottomNavigation from "@/components/SimpleBottomNavigation";
 import SimpleDrawer from "@/components/SimpleDrawer";
-import { Divider, Typography } from "@mui/material";
+import { CircularProgress, Divider, Typography } from "@mui/material";
 import HomeToolBar from "@/components/toolbar/HomeToolBar";
 import SimpleAppBar from "@/components/SimpleAppBar";
 import { useAppDispatch, useAppSelector } from "@/utils/hooks";
@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { apolloQuery } from "@/utils/apollo";
 import { ArticleFields } from "@/helpers/graphqlField";
 import { useRouter } from "next/router";
+import { fetchData } from "@/helpers/fetchData";
 
 interface IProps {
   children: React.ReactNode;
@@ -26,61 +27,9 @@ export default function MainLayout(props: IProps) {
   const theme = useTheme();
   const router = useRouter();
 
-  const fetchData = async () => {
-    dispatch({ type: "feed/toggleLoading" });
-    const res = await apolloQuery(`{
-      me{
-        id
-        name
-        email
-        avatar
-        articles{
-          url
-          already_read
-          favorites
-          read_later
-        }
-        taxonomies{
-          id
-          name
-          type
-          slug
-          children{
-            id
-            name
-            type
-            slug
-          }
-        }
-        settings{
-          id
-          dark_mode
-          notification
-          showByPage
-          feed_by
-        }
-      }
-      myFeed{${ArticleFields}}
-      exploreFeed{${ArticleFields}}
-    }`);
-    console.log(res?.data);
-    if (res?.data?.me?.id) {
-      dispatch({ type: "user/setData", payload: res?.data.me });
-      dispatch({
-        type: "feed/getData",
-        payload: {
-          myFeed: res?.data.myFeed,
-          exploreFeed: res?.data.exploreFeed,
-        },
-      });
-
-      dispatch({ type: "feed/toggleLoading" });
-    }
-  };
-
   useEffect(() => {
-    if (!state.user?.user?.id) {
-      fetchData();
+    if (!state.user?.user?.id && !state.feed.loading) {
+      fetchData(dispatch);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.user?.user?.id]);
@@ -91,7 +40,7 @@ export default function MainLayout(props: IProps) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <SimpleAppBar />
-        
+
         <Box sx={{ p: 3, mt: 10 }}>
           <Box sx={{ maxWidth: "60rem", mx: "auto" }}>
             <Box
@@ -105,7 +54,7 @@ export default function MainLayout(props: IProps) {
                 {props.title}
               </Typography>
 
-              <HomeToolBar />
+              {!state.setting?.loading && <HomeToolBar />}
             </Box>
             {props.children}
           </Box>

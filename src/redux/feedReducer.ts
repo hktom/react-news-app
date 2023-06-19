@@ -25,8 +25,8 @@ export const feedReducer: any = createSlice({
   name: "feed",
   initialState,
   reducers: {
-    toggleLoading: (state) => {
-      state.loading = !state.loading;
+    toggleLoading: (state, { payload }) => {
+      state.loading = payload;
     },
     getData: (state, { payload }) => {
       state.myFeed = payload.myFeed;

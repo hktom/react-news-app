@@ -18,14 +18,19 @@ function MenuDisposition() {
   const dispositions = ["Title-Only View", "Cards View", "Magazine View"];
 
   const changeDisposition = async (disposition: number) => {
-    dispatch({ type: "setting/changeDisposition", payload: disposition });
+    dispatch({ type: "setting/toggleLoading", payload: true });
+    dispatch({ type: "feed/toggleLoading", payload: true });
     const res = await apolloMutation(`mutation{
       settingUpsert(input:{
         disposition: ${disposition},
       }){
         id
+        disposition
       }
     }`);
+    dispatch({ type: "setting/changeDisposition", payload: disposition });
+    dispatch({ type: "setting/toggleLoading", payload: false });
+    dispatch({ type: "feed/toggleLoading", payload: false });
   };
 
   return (
