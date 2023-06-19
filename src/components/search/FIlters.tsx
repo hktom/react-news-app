@@ -1,10 +1,21 @@
 import { Box, Grid } from "@mui/material";
 import SimpleSelect from "./SimpleSelect";
-import { useAppSelector } from "@/utils/hooks";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
 import { IReducer } from "@/utils/rootReducer";
 
 function Filters() {
   const state = useAppSelector((state: IReducer) => state.search);
+  const dispatch = useAppDispatch();
+
+  const filter = (type: string, value: string) => {
+    dispatch({
+      type: "search/filter",
+      payload: {
+        type: type,
+        name: value,
+      },
+    });
+  };
 
   if (state.categories.length === 0 && state.sources.length === 0) return <></>;
 
@@ -16,9 +27,7 @@ function Filters() {
             <SimpleSelect
               title="Categories"
               options={state.categories}
-              onChange={(e) => {
-                console.log(e);
-              }}
+              onChange={(value) => filter("category", value)}
             />
           </Grid>
         )}
@@ -27,16 +36,25 @@ function Filters() {
             <SimpleSelect
               title="Sources"
               options={state.sources}
-              onChange={() => {}}
+              onChange={(value) => filter("source", value)}
             />
           </Grid>
         )}
         <Grid item xs={12} sm={6} md={4}>
-          {/* <SimpleSelect
+          <SimpleSelect
             title="Order By"
-            options={state.filters}
+            options={[
+              {
+                id: "0",
+                name: "Newest",
+              },
+              {
+                id: "1",
+                name: "Oldest",
+              },
+            ]}
             onChange={() => {}}
-          /> */}
+          />
         </Grid>
       </Grid>
     </Box>

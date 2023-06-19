@@ -32,15 +32,10 @@ export const searchReducer: any = createSlice({
     },
 
     filter: (state, { payload }) => {
-      state.feeds = payload.filter((item: any) => {
+      state.feeds = [...state.feeds].filter((item: any) => {
         if (payload.type == "category")
-          return (
-            item.category_id == payload.id || item.category_name == payload.name
-          );
-        if (payload.type == "source")
-          return (
-            item.source_id == payload.id || item.source_name == payload.name
-          );
+          return item.category_name == payload.name;
+        if (payload.type == "source") return item.source_name == payload.name;
       });
     },
 
@@ -65,7 +60,7 @@ export const searchReducer: any = createSlice({
     setCategories: (state, { payload }) => {
       let data: any = [{ id: "0", name: "All Categories" }];
       payload.forEach((item: any) => {
-        if (existingCategoryIndex(data, item) < 0) {
+        if (item.category_name && existingCategoryIndex(data, item) < 0) {
           data.push({ id: item.category_name, name: item.category_name });
         }
       });
@@ -76,7 +71,7 @@ export const searchReducer: any = createSlice({
     setSources: (state, { payload }) => {
       let data: any = [{ id: "0", name: "All Sources" }];
       payload.forEach((item: any) => {
-        if (existingSourceIndex(data, item) < 0) {
+        if (item.source_name && existingSourceIndex(data, item) < 0) {
           data.push({ id: item.source_name, name: item.source_name });
         }
       });

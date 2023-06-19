@@ -54,11 +54,10 @@ export const fetchData = async (dispatch: any) => {
           exploreFeed: res?.data.exploreFeed,
         },
       });
-
-      dispatch({ type: "feed/toggleLoading", payload: false });
     }
   } catch (error) {
     console.log(error);
+  } finally {
     dispatch({ type: "feed/toggleLoading", payload: false });
   }
 };
