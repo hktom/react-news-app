@@ -103,7 +103,7 @@ function SimpleDrawer() {
             {!state.is_drawer_open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
+        {/* <Divider /> */}
         <List>
           {MainMenu.map((item, index) => (
             <MenuListItem key={index} {...item} open={state.is_drawer_open} />

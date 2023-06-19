@@ -8,23 +8,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import SourceIcon from "@mui/icons-material/Source";
 import AppsIcon from "@mui/icons-material/Apps";
 import React from "react";
-
-interface IButtonProps {
-  title: string;
-  children: React.ReactNode;
-  onClick: () => void;
-}
-
-const ToolBarButton = (props: IButtonProps) => {
-  const { title, children, onClick } = props;
-  return (
-    <Tooltip title={title}>
-      <IconButton sx={{ mx: 2 }} onClick={() => onClick()}>
-        {children}
-      </IconButton>
-    </Tooltip>
-  );
-};
+import ToolBarButton, { IButtonProps } from "./ToolBarButton";
 
 function SimpleToolBar() {
   const dispatch = useAppDispatch();

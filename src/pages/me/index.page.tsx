@@ -4,8 +4,7 @@ import MainLayout from "@/layout/mainLayout";
 
 function Index() {
   return (
-    <MainLayout>
-      <h1>Today</h1>
+    <MainLayout title="Today" description="The insights you need to keep ahead">
       {/* <SimpleLoading /> */}
       <HomeTab page1={<div>1</div>} page2={<div>2</div>} />
     </MainLayout>
