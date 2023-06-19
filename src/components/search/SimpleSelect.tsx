@@ -9,7 +9,7 @@ import { ITaxonomy } from "@/utils/interface";
 interface IProps {
   title: string;
   options: ITaxonomy[];
-  onChange: (event: SelectChangeEvent) => void;
+  onChange: (value: string) => void;
 }
 
 export default function SimpleSelect(props: IProps) {
@@ -17,6 +17,7 @@ export default function SimpleSelect(props: IProps) {
 
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);
+    props.onChange(event.target.value as string);
   };
 
   return (

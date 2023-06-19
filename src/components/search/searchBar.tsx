@@ -1,7 +1,8 @@
 import { ArticleFields } from "@/helpers/graphqlField";
 import { searchData } from "@/helpers/searchData";
 import { apolloQuery } from "@/utils/apollo";
-import { useAppDispatch } from "@/utils/hooks";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
+import { IReducer } from "@/utils/rootReducer";
 import { Box, TextField } from "@mui/material";
 import debounce from "lodash.debounce";
 import { useCallback, useState } from "react";
@@ -13,17 +14,9 @@ function SearchBar() {
     if (newValue.length < 3 || !newValue) return;
     searchData(newValue, dispatch);
   };
+  const state = useAppSelector((state: IReducer) => state.search);
   const [search, setSearch] = useState("");
   const dispatch = useAppDispatch();
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const debouncedSave = useCallback(
-  //   debounce((newValue) => {
-  //     if (newValue.length < 3 || !newValue) return;
-  //     searchData(newValue, dispatch);
-  //   }, 3000),
-  //   []
-  // );
 
   return (
     <Box
@@ -36,6 +29,7 @@ function SearchBar() {
         placeholder="Your Search"
         variant="outlined"
         sx={{ width: "100%" }}
+        defaultValue={state.keywords}
         onChange={(event) => {
           // debouncedSave(event.target.value);
           setNewValue(event.target.value);

@@ -16,7 +16,9 @@ function Filters() {
             <SimpleSelect
               title="Categories"
               options={state.categories}
-              onChange={() => {}}
+              onChange={(e) => {
+                console.log(e);
+              }}
             />
           </Grid>
         )}
