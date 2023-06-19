@@ -6,7 +6,7 @@ export interface IMenuState {
 }
 
 export const initialState: IMenuState = {
-  is_drawer_open: false,
+  is_drawer_open: true,
   active_menu: "me",
 };
 

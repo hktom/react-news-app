@@ -12,6 +12,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { MainMenu, TaxonomiesMenu } from "@/helpers/leftMenu";
 import MenuListItem from "./MenuListItem";
+import { useAppSelector, useAppDispatch } from "@/utils/hooks";
+import { IReducer } from "@/utils/rootReducer";
 
 const drawerWidth = 240;
 
@@ -85,30 +87,31 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 function SimpleDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const state = useAppSelector((state: IReducer) => state.menu);
+  const dispatch = useAppDispatch();
 
   const toggleDrawer = () => {
-    setOpen(!open);
+    dispatch({ type: "menu/openDrawer", payload: !state.is_drawer_open });
   };
   return (
     <Box sx={{ display: { md: "block", xs: "none" } }}>
       <CssBaseline />
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={state.is_drawer_open}>
         <DrawerHeader>
           <IconButton onClick={toggleDrawer}>
-            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {!state.is_drawer_open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />
         <List>
           {MainMenu.map((item, index) => (
-            <MenuListItem key={index} {...item} open={open} />
+            <MenuListItem key={index} {...item} open={state.is_drawer_open} />
           ))}
         </List>
 
         <List>
-          <Box sx={{ opacity: open ? 1 : 0 }}>
+          <Box sx={{ opacity: state.is_drawer_open ? 1 : 0 }}>
             <Typography
               variant="body1"
               component="div"
@@ -118,12 +121,12 @@ function SimpleDrawer() {
             </Typography>
           </Box>
           {TaxonomiesMenu.map((item, index) => (
-            <MenuListItem key={index} {...item} open={open} />
+            <MenuListItem key={index} {...item} open={state.is_drawer_open} />
           ))}
         </List>
 
         <List>
-          <Box sx={{ opacity: open ? 1 : 0 }}>
+          <Box sx={{ opacity: state.is_drawer_open ? 1 : 0 }}>
             <Typography
               variant="body1"
               component="div"
@@ -133,7 +136,12 @@ function SimpleDrawer() {
             </Typography>
           </Box>
           {TaxonomiesMenu.map((item, index) => (
-            <MenuListItem key={index} {...item} icon={null} open={open} />
+            <MenuListItem
+              key={index}
+              {...item}
+              icon={null}
+              open={state.is_drawer_open}
+            />
           ))}
         </List>
       </Drawer>

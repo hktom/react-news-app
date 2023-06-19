@@ -35,17 +35,17 @@ export const MainMenu: ILeftMenu[] = [
 
 export const TaxonomiesMenu: ILeftMenu[] = [
   {
-    slug: "/me/categories",
+    slug: "/me/category",
     name: "Categories",
     icon: <CheckCircleOutlineIcon sx={iconStyle} />,
   },
   {
-    slug: "/me/sources",
+    slug: "/me/source",
     name: "Sources",
     icon: <CheckCircleOutlineIcon sx={iconStyle} />,
   },
   {
-    slug: "/me/authors",
+    slug: "/me/author",
     name: "Authors",
     icon: <CheckCircleOutlineIcon sx={iconStyle} />,
   },
