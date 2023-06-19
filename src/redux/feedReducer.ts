@@ -3,10 +3,18 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface IFeedState {
   articles: IArticle[];
+  favorites: IArticle[];
+  readLater: IArticle[];
+  alreadyRead: IArticle[];
+  article?: IArticle;
 }
 
 export const initialState: IFeedState = {
   articles: [],
+  favorites: [],
+  readLater: [],
+  alreadyRead: [],
+  article: undefined,
 };
 
 export const feedReducer: any = createSlice({
@@ -16,25 +24,49 @@ export const feedReducer: any = createSlice({
     getData: (state, { payload }) => {
       state.articles = payload.posts;
     },
-    readLater: (state, { payload }) => {
-      const index = state.articles.findIndex(
-        (item: IArticle) => item.id === payload.id
-      );
-      state.articles[index].read_later = payload.status;
+    showArticle: (state, { payload }) => {
+      state.article = payload;
+    },
+    addTo: (state, { payload }) => {
+      switch (payload.type) {
+        case "readLater":
+          state.readLater.push(payload);
+          break;
+        case "favorites":
+          state.favorites.push(payload);
+          break;
+
+        case "alreadyRead":
+          state.alreadyRead.push(payload);
+          break;
+
+        default:
+          break;
+      }
     },
 
-    bookmarked: (state, { payload }) => {
-      const index = state.articles.findIndex(
-        (item: IArticle) => item.id === payload.id
-      );
-      state.articles[index].favorites = payload.status;
-    },
+    removeFrom: (state, { payload }) => {
+      switch (payload.type) {
+        case "readLater":
+          state.readLater = state.readLater.filter(
+            (item: IArticle) => item.id !== payload.id
+          );
+          break;
+        case "favorites":
+          state.readLater = state.readLater.filter(
+            (item: IArticle) => item.id !== payload.id
+          );
+          break;
 
-    alreadyRead: (state, { payload }) => {
-      const index = state.articles.findIndex(
-        (item: IArticle) => item.id === payload.id
-      );
-      state.articles[index].already_read = payload.status;
+        case "alreadyRead":
+          state.readLater = state.readLater.filter(
+            (item: IArticle) => item.id !== payload.id
+          );
+          break;
+
+        default:
+          break;
+      }
     },
   },
 });
