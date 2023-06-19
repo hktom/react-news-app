@@ -4,6 +4,7 @@ import authReducer, { IAuthState } from "@/redux/authReducer";
 import settingReducer, { ISettingState } from "@/redux/settingReducer";
 import taxonomyReducer, { ITaxonomyState } from "@/redux/taxonomyReducer";
 import userReducer, { IUserState } from "@/redux/userReducer";
+import menuReducer, { IMenuState } from "@/redux/menuReducer";
 
 export interface IReducer {
   feed: IFeedState;
@@ -11,6 +12,7 @@ export interface IReducer {
   taxonomy: ITaxonomyState;
   setting: ISettingState;
   auth: IAuthState;
+  menu: IMenuState;
 }
 
 export const rootReducer = combineReducers({
@@ -19,6 +21,7 @@ export const rootReducer = combineReducers({
   taxonomy: taxonomyReducer,
   setting: settingReducer,
   auth: authReducer,
+  menu: menuReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
