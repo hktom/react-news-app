@@ -7,15 +7,15 @@ function Filters() {
   const state = useAppSelector((state: IReducer) => state.search);
   const dispatch = useAppDispatch();
 
-  const filter = (type: string, value: string) => {
-    dispatch({
-      type: "search/filter",
-      payload: {
-        type: type,
-        name: value,
-      },
-    });
-  };
+  // const filter = (type: string, value: string) => {
+  //   dispatch({
+  //     type: "search/filter",
+  //     payload: {
+  //       type: type,
+  //       name: value,
+  //     },
+  //   });
+  // };
 
   if (state.categories.length === 0 && state.sources.length === 0) return <></>;
 
@@ -27,7 +27,9 @@ function Filters() {
             <SimpleSelect
               title="Categories"
               options={state.categories}
-              onChange={(value) => filter("category", value)}
+              onChange={(value) =>
+                dispatch({ type: "search/filterByCategory", payload: value })
+              }
             />
           </Grid>
         )}
@@ -36,7 +38,9 @@ function Filters() {
             <SimpleSelect
               title="Sources"
               options={state.sources}
-              onChange={(value) => filter("source", value)}
+              onChange={(value) =>
+                dispatch({ type: "search/filterBySource", payload: value })
+              }
             />
           </Grid>
         )}
