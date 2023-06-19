@@ -11,6 +11,7 @@ function SimpleAppBar() {
         width: "100%",
         zIndex: 1,
         p: 3,
+        backgroundColor: "#fff",
         borderBottom: "1px solid #e0e0e0",
       }}
     >

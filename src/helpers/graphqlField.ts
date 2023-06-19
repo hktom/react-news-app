@@ -1,6 +1,7 @@
 export const ArticleFields:string = `
     id
     title
+    description
     content
     image
     publishedAt
