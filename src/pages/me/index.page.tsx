@@ -1,11 +1,19 @@
+import HomeTab from "@/components/HomeTab";
 import SimpleLoading from "@/components/SimpleLoading";
+import PageFeed from "@/components/homeTabPage/pageFeed";
 import MainLayout from "@/layout/mainLayout";
+import { useAppSelector } from "@/utils/hooks";
+import { IReducer } from "@/utils/rootReducer";
 
 function Index() {
+  const state = useAppSelector((state: IReducer) => state.feed);
   return (
-    <MainLayout>
-      <h1>Me</h1>
-      <SimpleLoading />
+    <MainLayout title="Today" description="The insights you need to keep ahead">
+      {/* <SimpleLoading /> */}
+      <HomeTab
+        page1={<PageFeed feeds={state.myFeed} loading={state.loading} />}
+        page2={<PageFeed feeds={state.exploreFeed} loading={state.loading} />}
+      />
     </MainLayout>
   );
 }

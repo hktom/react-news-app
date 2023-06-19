@@ -1,16 +1,21 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import feedReducer, { IFeedState } from "../redux/feedReducer";
 import authReducer, { IAuthState } from "@/redux/authReducer";
-import settingReducer, { ISettingState } from "@/redux/settingReducer";
+import settingReducer from "@/redux/settingReducer";
 import taxonomyReducer, { ITaxonomyState } from "@/redux/taxonomyReducer";
 import userReducer, { IUserState } from "@/redux/userReducer";
+import menuReducer, { IMenuState } from "@/redux/menuReducer";
+import { ISetting } from "./interface";
+import searchReducer, { ISearchState } from "@/redux/searchReducer";
 
 export interface IReducer {
   feed: IFeedState;
   user: IUserState;
   taxonomy: ITaxonomyState;
-  setting: ISettingState;
+  setting: ISetting;
   auth: IAuthState;
+  menu: IMenuState;
+  search: ISearchState;
 }
 
 export const rootReducer = combineReducers({
@@ -19,6 +24,8 @@ export const rootReducer = combineReducers({
   taxonomy: taxonomyReducer,
   setting: settingReducer,
   auth: authReducer,
+  menu: menuReducer,
+  search: searchReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

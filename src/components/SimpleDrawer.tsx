@@ -3,22 +3,17 @@ import { styled, useTheme, Theme, CSSObject } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import SimpleBottomNavigation from "@/components/SimpleBottomNavigation";
+import { MainMenu, TaxonomiesMenu } from "@/helpers/leftMenu";
+import MenuListItem from "./MenuListItem";
+import { useAppSelector, useAppDispatch } from "@/utils/hooks";
+import { IReducer } from "@/utils/rootReducer";
 
 const drawerWidth = 240;
 
@@ -48,7 +43,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   alignItems: "center",
   justifyContent: "flex-end",
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
+
   ...theme.mixins.toolbar,
 }));
 
@@ -92,69 +87,61 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 function SimpleDrawer() {
-  const [open, setOpen] = React.useState(false);
+  const state = useAppSelector((state: IReducer) => state.menu);
+  const dispatch = useAppDispatch();
 
   const toggleDrawer = () => {
-    setOpen(!open);
+    dispatch({ type: "menu/openDrawer", payload: !state.is_drawer_open });
   };
   return (
     <Box sx={{ display: { md: "block", xs: "none" } }}>
       <CssBaseline />
 
-      <Drawer variant="permanent" open={open}>
+      <Drawer variant="permanent" open={state.is_drawer_open}>
         <DrawerHeader>
           <IconButton onClick={toggleDrawer}>
-            {!open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {!state.is_drawer_open ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
-        <Divider />
+        {/* <Divider /> */}
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+          {MainMenu.map((item, index) => (
+            <MenuListItem key={index} {...item} open={state.is_drawer_open} />
           ))}
         </List>
-        <Divider />
+
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding sx={{ display: "block" }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+          <Box sx={{ opacity: state.is_drawer_open ? 1 : 0 }}>
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{ px: 2.5, mt: 2, mb: 1 }}
+            >
+              Feeds by
+            </Typography>
+          </Box>
+          {TaxonomiesMenu.map((item, index) => (
+            <MenuListItem key={index} {...item} open={state.is_drawer_open} />
+          ))}
+        </List>
+
+        <List>
+          <Box sx={{ opacity: state.is_drawer_open ? 1 : 0 }}>
+            <Typography
+              variant="body1"
+              component="div"
+              sx={{ px: 2.5, mt: 2, mb: 1 }}
+            >
+              Folders
+            </Typography>
+          </Box>
+          {TaxonomiesMenu.map((item, index) => (
+            <MenuListItem
+              key={index}
+              {...item}
+              icon={null}
+              open={state.is_drawer_open}
+            />
           ))}
         </List>
       </Drawer>

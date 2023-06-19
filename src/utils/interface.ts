@@ -9,12 +9,13 @@ export interface IUser {
 }
 
 export interface ISetting {
-  id: string;
+  id?: string;
   disposition?: number;
   dark_mode?: number;
   notification?: number;
   showByPage?: number;
   feed_by?: string;
+  loading?: boolean;
 }
 
 export interface IArticle {
@@ -38,11 +39,11 @@ export interface IArticle {
 }
 
 export interface ITaxonomy {
-  id: string;
-  name: string;
-  type: string;
+  id?: string;
+  name?: string;
+  type?: string;
   slug?: string;
-  user: IUser;
+  user?: IUser;
   parent?: ITaxonomy;
   children?: ITaxonomy[];
 }
@@ -72,4 +73,13 @@ export interface IAuth {
   loading?: boolean;
   token?: string;
   status?: number;
+}
+
+export interface ITextField {
+  id: string;
+  label: string;
+  type: "text" | "password" | "email";
+  required?: boolean;
+  sx?: any;
+  
 }

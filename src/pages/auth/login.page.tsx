@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -50,12 +51,17 @@ function Login() {
       authAction.auth({
         loading: false,
         error:
-          res.data?.signIn?.error &&
+          res.data?.signIn?.error ??
           "Sorry, we couldn't find an account with that email and password. Please try again.",
         token: res.data?.signIn?.token,
         status: res.data?.signIn?.status,
       })
     );
+
+    if (res.data?.signIn?.token) {
+      Cookies.set("token", res.data?.signIn?.token);
+      window.location.href = "/me";
+    }
   });
 
   const displayAlert = () => {

@@ -1,32 +1,36 @@
 import { ISetting, ITaxonomy, IUser } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
-export interface ISettingState {
-  settings?: ISetting;
-}
-
-export const initialState: ISettingState = {
-  settings: undefined,
-};
+export const initialState: ISetting = {};
 
 export const settingReducer: any = createSlice({
   name: "setting",
   initialState,
   reducers: {
+    toggleLoading: (state, { payload }) => {
+      state.loading = payload;
+    },
+    setSetting: (state, { payload }) => {
+      state.dark_mode = payload.dark_mode;
+      state.notification = payload.notification;
+      state.showByPage = payload.showByPage;
+      state.feed_by = payload.feed_by;
+      state.disposition = payload.disposition;
+    },
     changeTheme: (state, { payload }) => {
-      state.settings!.dark_mode = payload.status;
+      state.dark_mode = payload;
     },
     activeNotification: (state, { payload }) => {
-      state.settings!.notification = payload.status;
+      state.notification = payload;
     },
     changeDisposition: (state, { payload }) => {
-      state.settings!.disposition = payload.status;
+      state.disposition = payload;
     },
     changeFeedBy: (state, { payload }) => {
-      state.settings!.feed_by = payload.status;
+      state.feed_by = payload;
     },
     changeShowByPage: (state, { payload }) => {
-      state.settings!.showByPage = payload.status;
+      state.showByPage = payload;
     },
   },
 });
