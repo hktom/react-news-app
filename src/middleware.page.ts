@@ -4,7 +4,9 @@ import type { NextRequest } from "next/server";
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
   let token = request.cookies.get("token");
-  
+
+  console.log("**** middleware", request.nextUrl.pathname, token);
+
   if (request.nextUrl.pathname.startsWith("/me") && !token) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
@@ -19,4 +21,5 @@ export function middleware(request: NextRequest) {
 // See "Matching Paths" below to learn more
 export const config = {
   matcher: ["/me/:path*", "/auth/:path*"],
+  // matcher: "/:path*",
 };

@@ -73,3 +73,12 @@ export interface IAuth {
   token?: string;
   status?: number;
 }
+
+export interface ITextField {
+  id: string;
+  label: string;
+  type: "text" | "password" | "email";
+  required?: boolean;
+  sx?: any;
+  
+}

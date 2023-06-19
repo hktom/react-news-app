@@ -1,6 +1,7 @@
 import { authAction } from "@/redux/authReducer";
 import { apolloMutation, apolloQuery } from "@/utils/apollo";
 import { useAppDispatch, useAppSelector } from "@/utils/hooks";
+import { ITextField } from "@/utils/interface";
 import { IReducer } from "@/utils/rootReducer";
 import {
   Alert,
@@ -10,16 +11,39 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-type FormData = {
-  name: string;
-  email: string;
-  password: string;
-  confirm_password: string;
-};
+type FormData = any;
+
+const fields: ITextField[] = [
+  {
+    id: "name",
+    label: "Name",
+    required: true,
+    type: "text",
+  },
+  {
+    id: "email",
+    label: "Email",
+    required: true,
+    type: "text",
+  },
+  {
+    id: "password",
+    label: "Password",
+    required: true,
+    type: "password",
+  },
+  {
+    id: "confirm_password",
+    label: "Confirm Password",
+    required: true,
+    type: "password",
+  },
+];
 
 function Register() {
   const {
@@ -38,26 +62,30 @@ function Register() {
         loading: true,
       })
     );
-    const res = await apolloMutation(`
-    mutation{
-        signUp(name:"${data.name}", email:"${data.email}", password:"${data.password}, confirm_password:"${data.confirm_password}"){
-          error
-          token
-          status
-        }
+
+    const res = await apolloMutation(`mutation{
+      signUp(name:"${data.name}", email:"${data.email}", password:"${data.password}", confirm_password:"${data.confirm_password}"){
+        error
+        token
+        status
       }
-    `);
+    }`);
 
     dispatch(
       authAction.auth({
         loading: false,
         error:
-          res.data?.signUp?.error &&
+          res.data?.signUp?.error ??
           "Sorry, be sure to fill all the fields. Please try again.",
         token: res.data?.signUp?.token,
         status: res.data?.signUp?.status,
       })
     );
+
+    if (res.data?.signUp?.token) {
+      Cookies.set("token", res.data?.signUp?.token);
+      window.location.href = "/me";
+    }
   });
 
   const displayAlert = () => {
@@ -93,49 +121,24 @@ function Register() {
             {displayAlert()}
 
             <Box component="form" onSubmit={onSubmit} sx={{ my: 3 }}>
-              <TextField
-                id="name"
-                label="name"
-                type="text"
-                sx={{ width: "100%", mb: 2 }}
-                disabled={state.auth?.loading}
-                {...register("email")}
-                required
-              />
-              <TextField
-                id="email"
-                label="email"
-                type="email"
-                sx={{ width: "100%", mb: 2 }}
-                disabled={state.auth?.loading}
-                {...register("email")}
-                required
-              />
-              <TextField
-                id="password"
-                label="Password"
-                type="password"
-                sx={{ width: "100%", mb: 2 }}
-                disabled={state.auth?.loading}
-                {...register("password")}
-                required
-              />
-              <TextField
-                id="confirm_password"
-                label="confirm Password"
-                type="password"
-                sx={{ width: "100%", mb: 2 }}
-                disabled={state.auth?.loading}
-                {...register("confirm_password")}
-                required
-              />
+              {fields.map((item, index) => (
+                <TextField
+                  key={index}
+                  {...item}
+                  sx={{ width: "100%", mb: 2 }}
+                  disabled={state.auth?.loading}
+                  {...register(item.id, { required: item.required })}
+                  required
+                />
+              ))}
+
               <Button
                 variant="contained"
                 type="submit"
                 sx={{ width: "100%", py: 2 }}
                 disabled={state.auth?.loading}
               >
-                Login{" "}
+                Signup
                 {state.auth?.loading && (
                   <CircularProgress sx={{ color: "#fff", mx: 2 }} size={25} />
                 )}

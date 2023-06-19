@@ -33,9 +33,7 @@ export const getClient = () =>
 
 export const apolloQuery = async (object: any) => {
   return await getClient().query({
-    query: gql`
-      ${object}
-    `,
+    query: gql`${object}`,
     context: {
       fetchOptions: {
         next: { revalidate: 1 },
@@ -46,8 +44,6 @@ export const apolloQuery = async (object: any) => {
 
 export const apolloMutation = async (object: any) => {
   return await getClient().mutate({
-    mutation: gql`
-      ${object}
-    `,
+    mutation: gql`${object}`,
   });
 };
