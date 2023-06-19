@@ -2,7 +2,8 @@ import { IArticle } from "@/utils/interface";
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface IFeedState {
-  articles: IArticle[];
+  myFeed: IArticle[];
+  exploreFeed: IArticle[];
   favorites: IArticle[];
   readLater: IArticle[];
   alreadyRead: IArticle[];
@@ -11,7 +12,8 @@ export interface IFeedState {
 }
 
 export const initialState: IFeedState = {
-  articles: [],
+  myFeed: [],
+  exploreFeed: [],
   favorites: [],
   readLater: [],
   alreadyRead: [],
@@ -27,7 +29,8 @@ export const feedReducer: any = createSlice({
       state.loading = !state.loading;
     },
     getData: (state, { payload }) => {
-      state.articles = payload.posts;
+      state.myFeed = payload.myFeed;
+      state.exploreFeed = payload.exploreFeed;
     },
     showArticle: (state, { payload }) => {
       state.article = payload;

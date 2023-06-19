@@ -14,10 +14,7 @@ export const userReducer: any = createSlice({
   initialState,
   reducers: {
     setData: (state, { payload }) => {
-      state.user!.id = payload.user?.id;
-      state.user!.name = payload.user?.name;
-      state.user!.email = payload.user?.email;
-      state.user!.avatar = payload.user?.avatar;
+      state.user = payload;
     },
     updateProfile: (state, { payload }) => {
       state.user!.id = payload.user?.id;

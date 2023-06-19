@@ -12,6 +12,7 @@ import { IReducer } from "@/utils/rootReducer";
 import { useEffect } from "react";
 import { apolloQuery } from "@/utils/apollo";
 import { ArticleFields } from "@/helpers/graphqlField";
+import { useRouter } from "next/router";
 
 interface IProps {
   children: React.ReactNode;
@@ -23,6 +24,7 @@ export default function MainLayout(props: IProps) {
   const state = useAppSelector((state: IReducer) => state);
   const dispatch = useAppDispatch();
   const theme = useTheme();
+  const router = useRouter();
 
   const fetchData = async () => {
     dispatch({ type: "feed/toggleLoading" });
@@ -62,16 +64,26 @@ export default function MainLayout(props: IProps) {
       exploreFeed{${ArticleFields}}
     }`);
     console.log(res?.data);
-    dispatch({ type: "feed/toggleLoading" });
+    if (res?.data?.me?.id) {
+      dispatch({ type: "user/setData", payload: res?.data.me });
+      dispatch({
+        type: "feed/getData",
+        payload: {
+          myFeed: res?.data.myFeed,
+          exploreFeed: res?.data.exploreFeed,
+        },
+      });
+
+      dispatch({ type: "feed/toggleLoading" });
+    }
   };
 
   useEffect(() => {
     if (!state.user?.user?.id) {
       fetchData();
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [state.user?.user?.id]);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -79,6 +91,7 @@ export default function MainLayout(props: IProps) {
 
       <Box component="main" sx={{ flexGrow: 1, p: 0 }}>
         <SimpleAppBar />
+        
         <Box sx={{ p: 3, mt: 10 }}>
           <Box sx={{ maxWidth: "60rem", mx: "auto" }}>
             <Box
