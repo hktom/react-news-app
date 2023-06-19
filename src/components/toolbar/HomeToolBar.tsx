@@ -6,6 +6,7 @@ import ToolBarButton, { IButtonProps } from "./ToolBarButton";
 import CheckIcon from "@mui/icons-material/Check";
 import ListIcon from "@mui/icons-material/List";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import SearchIcon from "@mui/icons-material/Search";
 
 function HomeToolBar() {
   const dispatch = useAppDispatch();
@@ -23,6 +24,11 @@ function HomeToolBar() {
       onClick: () => {},
     },
     {
+      title: "Search Articles",
+      children: <SearchIcon />,
+      onClick: () => {},
+    },
+    {
       title: "Refresh",
       children: <RefreshIcon />,
       onClick: () => {},
@@ -30,7 +36,7 @@ function HomeToolBar() {
   ];
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
       {buttons.map((item, index) => (
         <ToolBarButton key={index} title={item.title} onClick={item.onClick}>
           {item.children}

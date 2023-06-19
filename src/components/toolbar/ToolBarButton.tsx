@@ -10,7 +10,7 @@ export const ToolBarButton = (props: IButtonProps) => {
   const { title, children, onClick } = props;
   return (
     <Tooltip title={title}>
-      <IconButton sx={{ mx: 2 }} onClick={() => onClick()}>
+      <IconButton sx={{ mx: 0 }} onClick={() => onClick()}>
         {children}
       </IconButton>
     </Tooltip>
