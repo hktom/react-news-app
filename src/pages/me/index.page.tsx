@@ -11,8 +11,8 @@ function Index() {
     <MainLayout title="Today" description="The insights you need to keep ahead">
       {/* <SimpleLoading /> */}
       <HomeTab
-        page1={<PageFeed feeds={state.myFeed} />}
-        page2={<PageFeed feeds={state.exploreFeed} />}
+        page1={<PageFeed feeds={state.myFeed} loading={state.loading} />}
+        page2={<PageFeed feeds={state.exploreFeed} loading={state.loading} />}
       />
     </MainLayout>
   );
