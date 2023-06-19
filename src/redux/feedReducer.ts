@@ -30,14 +30,14 @@ export const feedReducer: any = createSlice({
     addTo: (state, { payload }) => {
       switch (payload.type) {
         case "readLater":
-          state.readLater.push(payload);
+          state.readLater.push(payload.article);
           break;
         case "favorites":
-          state.favorites.push(payload);
+          state.favorites.push(payload.article);
           break;
 
         case "alreadyRead":
-          state.alreadyRead.push(payload);
+          state.alreadyRead.push(payload.article);
           break;
 
         default:
