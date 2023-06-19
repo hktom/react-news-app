@@ -10,11 +10,17 @@ function SearchBar() {
   const dispatch = useAppDispatch();
 
   const searchData = async (value: string) => {
+    dispatch({ type: "search/toggleLoading", payload: true });
     const res = await apolloQuery(`{
         searchArticle(search:"${value}"){
             ${ArticleFields}
         }
     }`);
+    if (res.data?.searchArticle) {
+      dispatch({ type: "search/saveKeywords", payload: value });
+      dispatch({ type: "search/setFeeds", payload: res.data?.searchArticle });
+    }
+    dispatch({ type: "search/toggleLoading", payload: false });
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
