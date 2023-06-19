@@ -1,5 +1,6 @@
 import PageFeed from "@/components/homeTabPage/pageFeed";
-import SearchBar from "@/components/searchBar";
+import Filters from "@/components/search/FIlters";
+import SearchBar from "@/components/search/searchBar";
 import MainLayout from "@/layout/mainLayout";
 import { useAppSelector } from "@/utils/hooks";
 import { IReducer } from "@/utils/rootReducer";
@@ -12,6 +13,7 @@ function Index() {
   return (
     <MainLayout title="Search" description="Find your article">
       <SearchBar />
+      <Filters />
       <PageFeed feeds={state.feeds} loading={state.loading} />
     </MainLayout>
   );

@@ -4,7 +4,8 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface ISearchState {
   feeds: IArticle[];
   feeds_temp: IArticle[];
-  filters: ITaxonomy[];
+  categories: ITaxonomy[];
+  sources: ITaxonomy[];
   loading: boolean;
   keywords: string;
 }
@@ -12,7 +13,8 @@ export interface ISearchState {
 export const initialState: ISearchState = {
   feeds: [],
   feeds_temp: [],
-  filters: [],
+  categories: [],
+  sources: [],
   loading: false,
   keywords: "",
 };
@@ -30,7 +32,7 @@ export const searchReducer: any = createSlice({
     },
 
     filter: (state, { payload }) => {
-      state.feeds = [...state.feeds].filter((item: any) => {
+      state.feeds = payload.filter((item: any) => {
         if (payload.type == "category")
           return (
             item.category_id == payload.id || item.category_name == payload.name
@@ -60,38 +62,84 @@ export const searchReducer: any = createSlice({
       });
     },
 
-    setFilters: (state, { payload }) => {
+    setCategories: (state, { payload }) => {
       let data: any = [];
       payload.forEach((item: any) => {
-        data.push(
-          {
-            id: item.source_id,
-            name: item.source_name,
-            slug: item.source_id,
-            type: "source",
-          },
-          //   {
-          //     id: item.author_id,
-          //     name: item.author_name,
-          //     slug: item.author_sid,
-          //     type: "author",
-          //   },
-          {
+        if (existingCategoryIndex(data, item) < 0) {
+          data.push({
             id: item.category_id,
             name: item.category_name,
             slug: item.category_id,
             type: "category",
-          }
-        );
+          });
+        }
       });
-      state.filters = data;
+
+      state.categories = data;
     },
+
+    setSources: (state, { payload }) => {
+      let data: any = [];
+      payload.forEach((item: any) => {
+        if (existingSourceIndex(data, item) < 0) {
+          data.push({
+            id: item.source_id,
+            name: item.source_name,
+            slug: item.source_id,
+            type: "source",
+          });
+        }
+      });
+
+      state.sources = data;
+    },
+
+    // setFilters: (state, { payload }) => {
+    //   // let data: any = [];
+    //   // payload.forEach((item: any) => {
+    //   //   // console.log(data, existingSourceIndex(data, item), existingCategoryIndex(data, item));
+    //   //   console.log(
+    //   //     "masuk",
+    //   //     item,
+    //   //     item.type,
+    //   //     existingSourceIndex(data, item) < 0,
+    //   //     item.type == "source" && existingSourceIndex(data, item) < 0
+    //   //   );
+    //   //   if (item.type == "source" && existingSourceIndex(data, item) < 0) {
+    //   //     data.push({
+    //   //       id: item.source_id,
+    //   //       name: item.source_name,
+    //   //       slug: item.source_id,
+    //   //       type: "source",
+    //   //     });
+    //   //   }
+    //   //   if (item.type == "category" && existingCategoryIndex(data, item) < 0) {
+    //   //     data.push({
+    //   //       id: item.category_id,
+    //   //       name: item.category_name,
+    //   //       slug: item.category_id,
+    //   //       type: "category",
+    //   //     });
+    //   //   }
+    //   // });
+    //   // state.filters = data;
+    // },
 
     toggleLoading: (state, { payload }) => {
       state.loading = payload;
     },
   },
 });
+
+const existingSourceIndex = (data: any, item: any) =>
+  data.findIndex(
+    (i: any) => i.id == item.source_id && i.name == item.source_name
+  );
+
+const existingCategoryIndex = (data: any, item: any) =>
+  data.findIndex(
+    (i: any) => i.id == item.category_id && i.name == item.category_name
+  );
 
 export const searchAction: any = searchReducer.actions;
 

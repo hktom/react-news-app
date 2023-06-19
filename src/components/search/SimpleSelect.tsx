@@ -4,10 +4,11 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { ITaxonomy } from "@/utils/interface";
 
 interface IProps {
   title: string;
-  options: string[];
+  options: ITaxonomy[];
   onChange: (event: SelectChangeEvent) => void;
 }
 
@@ -21,17 +22,22 @@ export default function SimpleSelect(props: IProps) {
   return (
     <Box sx={{ width: "100%" }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">{props.title}</InputLabel>
+        <InputLabel
+          id="demo-simple-select-label"
+          sx={{ backgroundColor: "#fff" }}
+        >
+          {props.title}
+        </InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={value}
-          label="Age"
+          label={props.title}
           onChange={handleChange}
         >
           {props.options.map((item, index) => (
-            <MenuItem key={index} value={item}>
-              {item}
+            <MenuItem key={index} value={item.id}>
+              {item.name}
             </MenuItem>
           ))}
         </Select>
