@@ -7,6 +7,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import ListIcon from "@mui/icons-material/List";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
+import MenuDisposition from "./MenuDisposition";
 
 function HomeToolBar() {
   const dispatch = useAppDispatch();
@@ -16,12 +17,17 @@ function HomeToolBar() {
     {
       title: "Mark all as read",
       children: <CheckIcon />,
-      onClick: () => {},
+      onClick: () => {
+        console.log("Mark all as read");
+      },
     },
     {
       title: "Disposition",
       children: <ListIcon />,
-      onClick: () => {},
+      onClick: () => {
+        console.log("show MenuDisposition");
+      },
+      menu: <MenuDisposition />,
     },
     {
       title: "Search Articles",
@@ -38,7 +44,12 @@ function HomeToolBar() {
   return (
     <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
       {buttons.map((item, index) => (
-        <ToolBarButton key={index} title={item.title} onClick={item.onClick}>
+        <ToolBarButton
+          key={index}
+          title={item.title}
+          onClick={item.onClick}
+          menu={item.menu}
+        >
           {item.children}
         </ToolBarButton>
       ))}

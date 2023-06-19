@@ -14,12 +14,14 @@ function PageFeed(props: IProps) {
 
   if (state.feed?.loading) return <SimpleLoading />;
 
-  if (state.setting?.settings?.disposition === 2) {
+  if (state.setting?.disposition === 1) {
     return (
       <Box>
-        <Grid container>
+        <Grid container spacing={4}>
           {props.feeds.map((feed, index) => (
-            <SimpleCard key={index} article={feed} />
+            <Grid item md={4} xs={12} key={index}>
+              <SimpleCard article={feed} />
+            </Grid>
           ))}
         </Grid>
       </Box>
@@ -29,7 +31,7 @@ function PageFeed(props: IProps) {
   return (
     <Box
       sx={{
-        maxWidth: state.setting?.settings?.disposition !== 1 ? "50rem" : "auto",
+        maxWidth: state.setting?.disposition !== 0 ? "45rem" : "auto",
       }}
     >
       {props.feeds.map((feed, index) => (

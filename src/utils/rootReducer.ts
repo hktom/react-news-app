@@ -1,16 +1,17 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import feedReducer, { IFeedState } from "../redux/feedReducer";
 import authReducer, { IAuthState } from "@/redux/authReducer";
-import settingReducer, { ISettingState } from "@/redux/settingReducer";
+import settingReducer from "@/redux/settingReducer";
 import taxonomyReducer, { ITaxonomyState } from "@/redux/taxonomyReducer";
 import userReducer, { IUserState } from "@/redux/userReducer";
 import menuReducer, { IMenuState } from "@/redux/menuReducer";
+import { ISetting } from "./interface";
 
 export interface IReducer {
   feed: IFeedState;
   user: IUserState;
   taxonomy: ITaxonomyState;
-  setting: ISettingState;
+  setting: ISetting;
   auth: IAuthState;
   menu: IMenuState;
 }

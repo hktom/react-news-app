@@ -55,11 +55,11 @@ function SimpleCard(props: IProps) {
     saveArticle(props.article);
   };
 
-  switch (state.setting.settings?.disposition) {
-    case 1:
+  switch (state.setting.disposition) {
+    case 0:
       return <CTitle article={props.article} onClick={() => onClick()} />;
 
-    case 2:
+    case 1:
       return <CCard article={props.article} onClick={() => onClick()} />;
 
     default:

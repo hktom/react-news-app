@@ -11,31 +11,33 @@ interface IProps {
 }
 
 function CTitle(props: IProps) {
-
   return (
     <Box
       sx={{
         display: "flex",
+        alignItems: "flex-start",
+        justifyContent: "space-between",
         cursor: "pointer",
+        borderBottom: "1px solid #F6F7F8",
+        mb: 1,
         "&:hover": {
           backgroundColor: "#F6F7F8",
         },
       }}
       onClick={() => props.onClick!()}
     >
-      <IconButton aria-label="bookmark" onClick={() => props.onBookmark!()}>
-        <BookmarkBorderIcon />
-      </IconButton>
-
-      <Typography variant="h6" component="h2" sx={{ flexGrow: 1 }}>
-        {props.article?.source_name ?? props.article?.category_name}
+      <Typography
+        variant="body1"
+        component="h2"
+        sx={{ maxWidth: "80%", fontWeight: "bold", pr: 2 }}
+      >
+        {props.article?.title}
       </Typography>
 
-      {props.ago && (
-        <Typography variant="h3" component="div" sx={{ flexGrow: 1 }}>
-          {props.ago}
-        </Typography>
-      )}
+      <Typography variant="body2" component="span" sx={{ fontSize: "0.8rem" }}>
+        {props.article?.source_name ?? props.article?.category_name}
+        {props.ago}
+      </Typography>
     </Box>
   );
 }

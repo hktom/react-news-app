@@ -9,7 +9,7 @@ export interface IUser {
 }
 
 export interface ISetting {
-  id: string;
+  id?: string;
   disposition?: number;
   dark_mode?: number;
   notification?: number;
