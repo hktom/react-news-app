@@ -7,6 +7,11 @@ import SimpleDrawer from "@/components/SimpleDrawer";
 import { Divider, Typography } from "@mui/material";
 import HomeToolBar from "@/components/toolbar/HomeToolBar";
 import SimpleAppBar from "@/components/SimpleAppBar";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
+import { IReducer } from "@/utils/rootReducer";
+import { useEffect } from "react";
+import { apolloQuery } from "@/utils/apollo";
+import { ArticleFields } from "@/helpers/graphqlField";
 
 interface IProps {
   children: React.ReactNode;
@@ -15,7 +20,58 @@ interface IProps {
 }
 
 export default function MainLayout(props: IProps) {
+  const state = useAppSelector((state: IReducer) => state);
+  const dispatch = useAppDispatch();
   const theme = useTheme();
+
+  const fetchData = async () => {
+    dispatch({ type: "feed/toggleLoading" });
+    const res = await apolloQuery(`{
+      me{
+        id
+        name
+        email
+        avatar
+        articles{
+          url
+          already_read
+          favorites
+          read_later
+        }
+        taxonomies{
+          id
+          name
+          type
+          slug
+          children{
+            id
+            name
+            type
+            slug
+          }
+        }
+        settings{
+          id
+          dark_mode
+          notification
+          showByPage
+          feed_by
+        }
+      }
+      myFeed{${ArticleFields}}
+      exploreFeed{${ArticleFields}}
+    }`);
+    console.log(res?.data);
+    dispatch({ type: "feed/toggleLoading" });
+  };
+
+  useEffect(() => {
+    if (!state.user?.user?.id) {
+      fetchData();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>

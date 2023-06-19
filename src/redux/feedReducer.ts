@@ -7,6 +7,7 @@ export interface IFeedState {
   readLater: IArticle[];
   alreadyRead: IArticle[];
   article?: IArticle;
+  loading: boolean;
 }
 
 export const initialState: IFeedState = {
@@ -15,12 +16,16 @@ export const initialState: IFeedState = {
   readLater: [],
   alreadyRead: [],
   article: undefined,
+  loading: false,
 };
 
 export const feedReducer: any = createSlice({
   name: "feed",
   initialState,
   reducers: {
+    toggleLoading: (state) => {
+      state.loading = !state.loading;
+    },
     getData: (state, { payload }) => {
       state.articles = payload.posts;
     },
