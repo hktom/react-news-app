@@ -8,6 +8,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import { apolloMutation } from "@/utils/apollo";
 import { getArticleMutationKeysValue } from "@/helpers/getArticleMutationKeysValue";
+import { saveArticle } from "@/helpers/saveArticle";
 
 dayjs.extend(relativeTime);
 
@@ -20,35 +21,11 @@ function SimpleCard(props: IProps) {
   const state = useAppSelector((state: IReducer) => state);
   const dispatch = useAppDispatch();
 
-  const saveArticle = async (article: IArticle) => {
-    const q = getArticleMutationKeysValue(article, [
-      "id",
-      "read_later",
-      "favorites",
-      "already_read",
-    ]);
-    try {
-      const res = await apolloMutation(`mutation{
-        articleStatus(input:{
-            ${q}
-            already_read:1
-        }){
-          id
-        }
-    }`);
-      
-      console.log(res);
-    } catch (e) {
-      console.log(`${q}, already_read:1`);
-      console.log(e);
-    } finally {
-    }
-  };
-
   const onClick = () => {
     dispatch({ type: "dialog/toggle", payload: true });
     dispatch({ type: "feed/showArticle", payload: props.article });
-    saveArticle(props.article);
+    const exceptFields = ["id", "read_later", "favorites", "already_read"];
+    saveArticle(props.article, exceptFields, "already_read:1", () => {});
   };
 
   switch (state.setting.disposition) {

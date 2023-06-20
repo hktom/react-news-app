@@ -17,6 +17,7 @@ export interface IButtonProps {
   onClick: () => void;
   menu?: React.ReactNode;
   sx?: any;
+  type?: any;
 }
 
 export const ToolBarButton = (props: IButtonProps) => {
