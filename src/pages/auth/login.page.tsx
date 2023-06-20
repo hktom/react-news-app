@@ -40,7 +40,7 @@ function Login() {
     );
     const res = await apolloMutation(`
     mutation{
-        signIn(email:"${data.email}", password:"${data.password}}"){
+        signIn(email:"${data.email}", password:"${data.password}"){
           error
           token
           status
@@ -51,9 +51,7 @@ function Login() {
     dispatch(
       authAction.auth({
         loading: false,
-        error:
-          res.data?.signIn?.error ??
-          "Sorry, we couldn't find an account with that email and password. Please try again.",
+        error: res.data?.signIn?.error,
         token: res.data?.signIn?.token,
         status: res.data?.signIn?.status,
       })

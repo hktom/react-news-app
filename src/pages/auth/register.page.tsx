@@ -75,9 +75,7 @@ function Register() {
     dispatch(
       authAction.auth({
         loading: false,
-        error:
-          res.data?.signUp?.error ??
-          "Sorry, be sure to fill all the fields. Please try again.",
+        error: res.data?.signUp?.error,
         token: res.data?.signUp?.token,
         status: res.data?.signUp?.status,
       })
