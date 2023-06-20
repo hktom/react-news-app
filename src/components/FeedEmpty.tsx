@@ -6,7 +6,6 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useState } from "react";
 import slug from "slug";
 
-
 function FeedEmpty() {
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -31,7 +30,7 @@ function FeedEmpty() {
             id
           }
         `;
-    categories.forEach((category) => {
+    categories.forEach((category: any) => {
       let key = category.replaceAll(/[^a-zA-Z ]/g, "").replaceAll(" ", "");
 
       query += `
@@ -48,7 +47,7 @@ function FeedEmpty() {
     query += `}`;
 
     const res = await apolloMutation(query);
-    if (res?.data?.settingUpsert?.imu) {
+    if (res?.data?.settingUpsert?.id) {
       fetchData(dispatch);
     }
 
