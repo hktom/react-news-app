@@ -25,20 +25,45 @@ function SimpleCard(props: IProps) {
     dispatch({ type: "dialog/toggle", payload: true });
     dispatch({ type: "dialog/changePage", payload: 0 });
     dispatch({ type: "feed/showArticle", payload: props.article });
-    
+
     const exceptFields = ["id", "read_later", "favorites", "already_read"];
     saveArticle(props.article, exceptFields, "already_read:1", () => {});
   };
 
+  const getAgo = () => {
+    if (props.article.publishedAt) {
+      return dayjs().to(dayjs(props.article.publishedAt));
+    }
+    return "";
+  };
+
   switch (state.setting.disposition) {
     case 0:
-      return <CTitle article={props.article} onClick={() => onClick()} />;
+      return (
+        <CTitle
+          article={props.article}
+          onClick={() => onClick()}
+          ago={getAgo()}
+        />
+      );
 
     case 1:
-      return <CCard article={props.article} onClick={() => onClick()} />;
+      return (
+        <CCard
+          article={props.article}
+          onClick={() => onClick()}
+          ago={getAgo()}
+        />
+      );
 
     default:
-      return <CBlog article={props.article} onClick={() => onClick()} />;
+      return (
+        <CBlog
+          article={props.article}
+          onClick={() => onClick()}
+          ago={getAgo()}
+        />
+      );
   }
 }
 

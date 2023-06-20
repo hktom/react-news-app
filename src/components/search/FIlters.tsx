@@ -27,8 +27,17 @@ function Filters() {
             <SimpleSelect
               title="Categories"
               options={state.categories}
+              defaultValue={state.category || ""}
               onChange={(value) =>
-                dispatch({ type: "search/filterByCategory", payload: value })
+                // type: "search/filterByCategory",
+                dispatch({
+                  type: "search/filter",
+                  payload: {
+                    category: value,
+                    source: state.source,
+                    orderBy: state.orderBy,
+                  },
+                })
               }
             />
           </Grid>
@@ -38,8 +47,24 @@ function Filters() {
             <SimpleSelect
               title="Sources"
               options={state.sources}
-              onChange={(value) =>
-                dispatch({ type: "search/filterBySource", payload: value })
+              defaultValue={state.source || ""}
+              onChange={
+                (value) =>
+                  dispatch({
+                    type: "search/filter",
+                    payload: {
+                      category: state.category,
+                      source: value,
+                      orderBy: state.orderBy,
+                    },
+                  })
+                // dispatch({
+                //   type: "search/filterBySource",
+                //   payload: {
+                //     type: value,
+                //     data: [...state.feeds],
+                //   },
+                // })
               }
             />
           </Grid>
@@ -49,15 +74,37 @@ function Filters() {
             title="Order By"
             options={[
               {
-                id: "0",
+                id: "newest",
                 name: "Newest",
               },
               {
-                id: "1",
+                id: "oldest",
                 name: "Oldest",
               },
             ]}
-            onChange={() => {}}
+            defaultValue={state.orderBy || ""}
+            onChange={(value) => {
+              dispatch({
+                type: "search/filter",
+                payload: {
+                  category: state.category,
+                  source: state.source,
+                  orderBy: value,
+                },
+              });
+              // console.log(value);
+              // if (value === "newest") {
+              //   dispatch({
+              //     type: "search/orderByNewest",
+              //     payload: [...state.feeds],
+              //   });
+              // } else {
+              //   dispatch({
+              //     type: "search/orderByOldest",
+              //     payload: [...state.feeds],
+              //   });
+              // }
+            }}
           />
         </Grid>
       </Grid>

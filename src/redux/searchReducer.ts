@@ -20,9 +20,9 @@ export const initialState: ISearchState = {
   sources: [],
   loading: false,
   keywords: "",
-  category: "all",
-  source: "all",
-  orderBy: "newest",
+  category: "",
+  source: "",
+  orderBy: "",
 };
 
 export const searchReducer: any = createSlice({
@@ -37,52 +37,22 @@ export const searchReducer: any = createSlice({
       state.feeds_temp = payload;
     },
 
-    setCategory: (state, { payload }) => {
-      state.category = payload;
-    },
+    filter: (state, { payload }) => {
+      state.category = payload.category;
+      state.source = payload.source;
+      state.orderBy = payload.orderBy;
 
-    setSource: (state, { payload }) => {
-      state.source = payload;
-    },
-
-    setOrderBy: (state, { payload }) => {
-      state.orderBy = payload;
-    },
-
-    filterByCategory: (state, { payload }) => {
       let data = [...state.feeds_temp];
-      if (payload == "all" && state.source != "all") {
-        state.feeds = filterBySource(data, state.source);
+      data = filterBySource(data, payload.source);
+      data = filterByCategory(data, payload.category);
+
+      if (payload.orderBy == "newest") {
+        state.feeds = orderByNewest(data);
+      } else if (state.orderBy == "oldest") {
+        state.feeds = orderByOldest(data);
       } else {
-        state.feeds = filterByCategory(data, payload);
+        state.feeds = data;
       }
-    },
-
-    filterBySource: (state, { payload }) => {
-      let data = [...state.feeds_temp];
-      if (payload == "all" && state.category != "all") {
-        state.feeds = filterByCategory(data, state.category);
-      } else {
-        state.feeds = filterBySource(data, payload);
-      }
-    },
-
-    orderByNewest: (state, { payload }) => {
-      state.feeds = [...state.feeds].sort((a: any, b: any) => {
-        return (
-          new Date(b.published_at).getTime() -
-          new Date(a.published_at).getTime()
-        );
-      });
-    },
-
-    orderByOldest: (state, { payload }) => {
-      state.feeds = [...state.feeds].sort((a: any, b: any) => {
-        return (
-          new Date(a.published_at).getTime() -
-          new Date(b.published_at).getTime()
-        );
-      });
     },
 
     setCategories: (state, { payload }) => {
@@ -113,9 +83,25 @@ export const searchReducer: any = createSlice({
   },
 });
 
+const orderByNewest = (data: any) => {
+  return data.sort((a: any, b: any) => {
+    return (
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    );
+  });
+};
+
+const orderByOldest = (data: any) => {
+  return data.sort((a: any, b: any) => {
+    return (
+      new Date(a.publishedAt).getTime() - new Date(b.publishedAt).getTime()
+    );
+  });
+};
+
 const filterByCategory = (data: any, category: any) => {
   return data.filter((item: any) => {
-    if (category != "all") {
+    if (category != "all" && category) {
       return item.category_name == category;
     }
     return true;
@@ -124,7 +110,7 @@ const filterByCategory = (data: any, category: any) => {
 
 const filterBySource = (data: any, source: any) => {
   return data.filter((item: any) => {
-    if (source != "all") {
+    if (source != "all" && source) {
       return item.source_name == source;
     }
     return true;
