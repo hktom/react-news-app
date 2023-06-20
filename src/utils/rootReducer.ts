@@ -7,6 +7,7 @@ import userReducer, { IUserState } from "@/redux/userReducer";
 import menuReducer, { IMenuState } from "@/redux/menuReducer";
 import { ISetting } from "./interface";
 import searchReducer, { ISearchState } from "@/redux/searchReducer";
+import dialogReducer, { IDialogState } from "@/redux/dialogReducer";
 
 export interface IReducer {
   feed: IFeedState;
@@ -16,6 +17,7 @@ export interface IReducer {
   auth: IAuthState;
   menu: IMenuState;
   search: ISearchState;
+  dialog: IDialogState;
 }
 
 export const rootReducer = combineReducers({
@@ -26,6 +28,7 @@ export const rootReducer = combineReducers({
   auth: authReducer,
   menu: menuReducer,
   search: searchReducer,
+  dialog: dialogReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

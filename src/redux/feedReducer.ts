@@ -38,13 +38,31 @@ export const feedReducer: any = createSlice({
     addTo: (state, { payload }) => {
       switch (payload.type) {
         case "readLater":
+          if (
+            state.readLater.find(
+              (item: IArticle) => item.url === payload.article.url
+            )
+          )
+            return;
           state.readLater.push(payload.article);
           break;
         case "favorites":
+          if (
+            state.favorites.find(
+              (item: IArticle) => item.url === payload.article.url
+            )
+          )
+            return;
           state.favorites.push(payload.article);
           break;
 
         case "alreadyRead":
+          if (
+            state.alreadyRead.find(
+              (item: IArticle) => item.url === payload.article.url
+            )
+          )
+            return;
           state.alreadyRead.push(payload.article);
           break;
 

@@ -2,6 +2,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import HistoryToggleOffIcon from '@mui/icons-material/HistoryToggleOff';
 
 export interface ILeftMenu {
   slug: string;
@@ -20,6 +21,11 @@ export const MainMenu: ILeftMenu[] = [
     slug: "/me",
     name: "Today",
     icon: <HomeIcon sx={iconStyle} />,
+  },
+  {
+    slug: "/me/history",
+    name: "History",
+    icon: <HistoryToggleOffIcon sx={iconStyle} />,
   },
   {
     slug: "/me/read-later",

@@ -1,12 +1,7 @@
-import SimpleLoading from "@/components/SimpleLoading";
-import MainLayout from "@/layout/mainLayout";
+import ArticleByStatus from "@/components/ArticleBy";
 
 function Index() {
-  return (
-    <MainLayout title="Read Later">
-      <SimpleLoading />
-    </MainLayout>
-  );
+  return <ArticleByStatus title="Read Later" id="read_later" value="1" />;
 }
 
 export default Index;

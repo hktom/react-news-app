@@ -8,6 +8,9 @@ export interface ISearchState {
   sources: ITaxonomy[];
   loading: boolean;
   keywords: string;
+  category: string;
+  source: string;
+  orderBy: string;
 }
 
 export const initialState: ISearchState = {
@@ -17,6 +20,9 @@ export const initialState: ISearchState = {
   sources: [],
   loading: false,
   keywords: "",
+  category: "all",
+  source: "all",
+  orderBy: "newest",
 };
 
 export const searchReducer: any = createSlice({
@@ -31,12 +37,34 @@ export const searchReducer: any = createSlice({
       state.feeds_temp = payload;
     },
 
-    filter: (state, { payload }) => {
-      state.feeds = [...state.feeds].filter((item: any) => {
-        if (payload.type == "category")
-          return item.category_name == payload.name;
-        if (payload.type == "source") return item.source_name == payload.name;
-      });
+    setCategory: (state, { payload }) => {
+      state.category = payload;
+    },
+
+    setSource: (state, { payload }) => {
+      state.source = payload;
+    },
+
+    setOrderBy: (state, { payload }) => {
+      state.orderBy = payload;
+    },
+
+    filterByCategory: (state, { payload }) => {
+      let data = [...state.feeds_temp];
+      if (payload == "all" && state.source != "all") {
+        state.feeds = filterBySource(data, state.source);
+      } else {
+        state.feeds = filterByCategory(data, payload);
+      }
+    },
+
+    filterBySource: (state, { payload }) => {
+      let data = [...state.feeds_temp];
+      if (payload == "all" && state.category != "all") {
+        state.feeds = filterByCategory(data, state.category);
+      } else {
+        state.feeds = filterBySource(data, payload);
+      }
     },
 
     orderByNewest: (state, { payload }) => {
@@ -58,7 +86,7 @@ export const searchReducer: any = createSlice({
     },
 
     setCategories: (state, { payload }) => {
-      let data: any = [{ id: "0", name: "All Categories" }];
+      let data: any = [{ id: "all", name: "All Categories" }];
       payload.forEach((item: any) => {
         if (item.category_name && existingCategoryIndex(data, item) < 0) {
           data.push({ id: item.category_name, name: item.category_name });
@@ -69,7 +97,7 @@ export const searchReducer: any = createSlice({
     },
 
     setSources: (state, { payload }) => {
-      let data: any = [{ id: "0", name: "All Sources" }];
+      let data: any = [{ id: "all", name: "All Sources" }];
       payload.forEach((item: any) => {
         if (item.source_name && existingSourceIndex(data, item) < 0) {
           data.push({ id: item.source_name, name: item.source_name });
@@ -84,6 +112,24 @@ export const searchReducer: any = createSlice({
     },
   },
 });
+
+const filterByCategory = (data: any, category: any) => {
+  return data.filter((item: any) => {
+    if (category != "all") {
+      return item.category_name == category;
+    }
+    return true;
+  });
+};
+
+const filterBySource = (data: any, source: any) => {
+  return data.filter((item: any) => {
+    if (source != "all") {
+      return item.source_name == source;
+    }
+    return true;
+  });
+};
 
 const existingSourceIndex = (data: any, item: any) =>
   data.findIndex((i: any) => i.name == item.source_name);

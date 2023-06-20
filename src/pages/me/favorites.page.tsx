@@ -1,12 +1,7 @@
-import SimpleLoading from "@/components/SimpleLoading";
-import MainLayout from "@/layout/mainLayout";
+import ArticleByStatus from "@/components/ArticleBy";
 
 function Index() {
-  return (
-    <MainLayout title="Favorites">
-      <SimpleLoading />
-    </MainLayout>
-  );
+  return <ArticleByStatus title="Favorites" id="favorites" value="1" />;
 }
 
 export default Index;
