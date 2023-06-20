@@ -1,12 +1,7 @@
-import SimpleLoading from "@/components/SimpleLoading";
-import MainLayout from "@/layout/mainLayout";
+import ArticleByStatus from "@/components/ArticleBy";
 
 function Index() {
-  return (
-    <MainLayout title="Feeds by sources">
-      <SimpleLoading />
-    </MainLayout>
-  );
+  return <ArticleByStatus title="Feeds by sources" taxonomies={"source"} />;
 }
 
 export default Index;

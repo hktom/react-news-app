@@ -1,11 +1,8 @@
-import SimpleLoading from "@/components/SimpleLoading";
-import MainLayout from "@/layout/mainLayout";
+import ArticleByStatus from "@/components/ArticleBy";
 
 function Index() {
   return (
-    <MainLayout title="Feeds by category">
-      <SimpleLoading />
-    </MainLayout>
+    <ArticleByStatus title="Feeds by categories" taxonomies={"category"} />
   );
 }
 

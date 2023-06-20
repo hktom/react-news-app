@@ -1,4 +1,4 @@
-import ArticleByStatus from "@/components/ArticleByStatus";
+import ArticleByStatus from "@/components/ArticleBy";
 
 function Index() {
   return <ArticleByStatus title="History" id="already_read" value="1" />;

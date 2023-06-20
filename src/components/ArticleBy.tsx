@@ -8,9 +8,10 @@ import { IArticle } from "@/utils/interface";
 import { useEffect, useState } from "react";
 
 interface IProps {
-  id: string;
-  value: string;
   title: string;
+  id?: string;
+  taxonomies?: "category" | "source" | "author" | undefined | null;
+  value?: string;
   description?: string;
 }
 
@@ -21,11 +22,23 @@ function ArticleByStatus(props: IProps) {
   const getHistories = async () => {
     setLoading(true);
     try {
-      const res = await apolloQuery(`{
-        getArticleBy(key:"${props.id}", value:"${props.value}"){
-            ${ArticleFields}
-        }
-    }`);
+      let query = "{";
+
+      if (props.taxonomies) {
+        query += `
+        GetArticleByTaxonomies(key:"${props.taxonomies!}"){ 
+          ${ArticleFields} 
+        } 
+        `;
+      } else {
+        query += `getArticleBy(key:"${props.id}", value:"${props.value}"){ 
+          ${ArticleFields} 
+         } `;
+      }
+
+      query += "}";
+
+      const res = await apolloQuery(query);
 
       if (res?.data?.getArticleBy) {
         setData(res?.data?.getArticleBy);
