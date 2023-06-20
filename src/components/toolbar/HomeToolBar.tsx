@@ -9,6 +9,7 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
 import MenuDisposition from "./MenuDisposition";
 import { useRouter } from "next/router";
+import { fetchData } from "@/helpers/fetchData";
 
 function HomeToolBar() {
   const dispatch = useAppDispatch();
@@ -16,13 +17,6 @@ function HomeToolBar() {
   const router = useRouter();
 
   const buttons: IButtonProps[] = [
-    {
-      title: "Mark all as read",
-      children: <CheckIcon />,
-      onClick: () => {
-        console.log("Mark all as read");
-      },
-    },
     {
       title: "Disposition",
       children: <ListIcon />,
@@ -39,7 +33,7 @@ function HomeToolBar() {
     {
       title: "Refresh",
       children: <RefreshIcon />,
-      onClick: () => {},
+      onClick: () => fetchData(dispatch),
     },
   ];
 

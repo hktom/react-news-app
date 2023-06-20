@@ -124,26 +124,6 @@ function SimpleDrawer() {
             <MenuListItem key={index} {...item} open={state.is_drawer_open} />
           ))}
         </List>
-
-        <List>
-          <Box sx={{ opacity: state.is_drawer_open ? 1 : 0 }}>
-            <Typography
-              variant="body1"
-              component="div"
-              sx={{ px: 2.5, mt: 2, mb: 1 }}
-            >
-              Folders
-            </Typography>
-          </Box>
-          {TaxonomiesMenu.map((item, index) => (
-            <MenuListItem
-              key={index}
-              {...item}
-              icon={null}
-              open={state.is_drawer_open}
-            />
-          ))}
-        </List>
       </Drawer>
     </Box>
   );
