@@ -27,26 +27,28 @@ function SimpleCard(props: IProps) {
       "favorites",
       "already_read",
     ]);
-    const res = await apolloMutation(`mutation{
+    try {
+      const res = await apolloMutation(`mutation{
         articleStatus(input:{
             ${q}
+            already_read:1
         }){
           id
         }
     }`);
+      
+      console.log(res);
+    } catch (e) {
+      console.log(`${q}, already_read:1`);
+      console.log(e);
+    } finally {
+    }
   };
 
   const onClick = () => {
     dispatch({ type: "dialog/toggle", payload: true });
     dispatch({ type: "feed/showArticle", payload: props.article });
-    // dispatch({
-    //   type: "feed/addTo",
-    //   payload: {
-    //     article: props.article,
-    //     type: "alreadyRead",
-    //   },
-    // });
-    // saveArticle(props.article);
+    saveArticle(props.article);
   };
 
   switch (state.setting.disposition) {

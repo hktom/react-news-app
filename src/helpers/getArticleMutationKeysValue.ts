@@ -11,7 +11,8 @@ export const getArticleMutationKeysValue = (
       article[key] &&
       !exceptFields.includes(key)
     ) {
-      input += `${key}: "${article[key]?.replaceAll('"', "'")}"`;
+
+      input += `${key}: """${article[key]?.replaceAll('"', "'")}"""`;
       if (key !== Object.keys(article)[Object.keys(article).length - 1]) {
         input += ", \n";
       }

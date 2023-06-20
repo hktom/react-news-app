@@ -17,7 +17,7 @@ function PageFeed(props: IProps) {
 
   if (state.setting?.disposition === 1) {
     return (
-      <Box>
+      <Box sx={{ mt: 2 }}>
         <Grid container spacing={4}>
           {props.feeds.map((feed, index) => (
             <Grid item md={4} xs={12} key={index}>
@@ -32,6 +32,7 @@ function PageFeed(props: IProps) {
   return (
     <Box
       sx={{
+        mt: 2,
         maxWidth: state.setting?.disposition !== 0 ? "45rem" : "auto",
       }}
     >
