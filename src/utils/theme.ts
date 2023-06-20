@@ -11,17 +11,17 @@ export const theme = createTheme({
       main: "#5f6f81",
     },
   },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          elevation: 0,
-          backgroundColor: "#40BE01",
-          color: "#fff",
-        },
-      },
-    },
-  },
+  // components: {
+  //   MuiButton: {
+  //     styleOverrides: {
+  //       root: {
+  //         elevation: 0,
+  //         backgroundColor: "#40BE01",
+  //         color: "#fff",
+  //       },
+  //     },
+  //   },
+  // },
   typography: {
     fontFamily: "Montserrat, sans-serif",
     body1: {
