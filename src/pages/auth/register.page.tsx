@@ -1,3 +1,4 @@
+import AuthLayout from "@/layout/authLayout";
 import { authAction } from "@/redux/authReducer";
 import { apolloMutation, apolloQuery } from "@/utils/apollo";
 import { useAppDispatch, useAppSelector } from "@/utils/hooks";
@@ -99,71 +100,46 @@ function Register() {
   };
 
   return (
-    <div>
-      <Box sx={{ minHeight: "100vh", display: "flex" }}>
-        <Box
-          sx={{
-            width: { md: "50%", xs: "100%" },
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box sx={{ width: "54%", margin: "auto" }}>
-            <Typography variant="h2" sx={{ textAlign: "center", my: 3 }}>
-              Sign Up to Talula
+    <AuthLayout
+      title="Sign Up to Talula"
+      description="to get access to all the features"
+      image="signup.jpeg"
+    >
+      <>
+        {displayAlert()}
+
+        <Box component="form" onSubmit={onSubmit} sx={{ my: 3 }}>
+          {fields.map((item, index) => (
+            <TextField
+              key={index}
+              {...item}
+              sx={{ width: "100%", mb: 2 }}
+              disabled={state.auth?.loading}
+              {...register(item.id, { required: item.required })}
+              required
+            />
+          ))}
+
+          <Button
+            variant="contained"
+            type="submit"
+            sx={{ width: "100%", py: 2 }}
+            disabled={state.auth?.loading}
+          >
+            Signup
+            {state.auth?.loading && (
+              <CircularProgress sx={{ color: "#fff", mx: 2 }} size={25} />
+            )}
+          </Button>
+
+          <Link href="/auth/login" style={{ textDecoration: "none" }}>
+            <Typography variant="body2" sx={{ textAlign: "center", my: 3 }}>
+              {"Already have an account? Login"}
             </Typography>
-
-            <Typography variant="body1" sx={{ textAlign: "center", my: 3 }}>
-              to get access to all the features
-            </Typography>
-
-            {displayAlert()}
-
-            <Box component="form" onSubmit={onSubmit} sx={{ my: 3 }}>
-              {fields.map((item, index) => (
-                <TextField
-                  key={index}
-                  {...item}
-                  sx={{ width: "100%", mb: 2 }}
-                  disabled={state.auth?.loading}
-                  {...register(item.id, { required: item.required })}
-                  required
-                />
-              ))}
-
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ width: "100%", py: 2 }}
-                disabled={state.auth?.loading}
-              >
-                Signup
-                {state.auth?.loading && (
-                  <CircularProgress sx={{ color: "#fff", mx: 2 }} size={25} />
-                )}
-              </Button>
-
-              <Link href="/auth/login" style={{ textDecoration: "none" }}>
-                <Typography variant="body2" sx={{ textAlign: "center", my: 3 }}>
-                  {"Already have an account? Login"}
-                </Typography>
-              </Link>
-            </Box>
-          </Box>
+          </Link>
         </Box>
-        <Box
-          sx={{
-            width: "50%",
-            height: "97vh",
-            backgroundImage: "url(/signup.jpeg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            display: { md: "block", xs: "none" },
-          }}
-        ></Box>
-      </Box>
-    </div>
+      </>
+    </AuthLayout>
   );
 }
 
