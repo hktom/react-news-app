@@ -20,16 +20,20 @@ function SimpleCard(props: IProps) {
   const state = useAppSelector((state: IReducer) => state);
   const dispatch = useAppDispatch();
 
-  
-
   const saveArticle = async (article: IArticle) => {
-    console.log(getArticleMutationKeysValue(article, ['id', 'read_later', 'favorites', 'already_read']));
-    // const res = await apolloMutation(`mutation{
-    //     articleStatus(input:{
-    //         ${getValue(article)}
-    //     }){
-    //     }
-    // }`);
+    const q = getArticleMutationKeysValue(article, [
+      "id",
+      "read_later",
+      "favorites",
+      "already_read",
+    ]);
+    const res = await apolloMutation(`mutation{
+        articleStatus(input:{
+            ${q}
+        }){
+          id
+        }
+    }`);
   };
 
   const onClick = () => {
@@ -42,7 +46,7 @@ function SimpleCard(props: IProps) {
     //     type: "alreadyRead",
     //   },
     // });
-    saveArticle(props.article);
+    // saveArticle(props.article);
   };
 
   switch (state.setting.disposition) {
