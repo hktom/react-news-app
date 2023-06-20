@@ -10,6 +10,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuDisposition from "./MenuDisposition";
 import { useRouter } from "next/router";
 import { fetchData } from "@/helpers/fetchData";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import MenuAccount from "./MenuAccount";
 
 function HomeToolBar() {
   const dispatch = useAppDispatch();
@@ -18,11 +20,15 @@ function HomeToolBar() {
 
   const buttons: IButtonProps[] = [
     {
+      title: "Account",
+      children: <AccountCircleIcon />,
+      onClick: () => {},
+      menu: <MenuAccount />,
+    },
+    {
       title: "Disposition",
       children: <ListIcon />,
-      onClick: () => {
-        console.log("show MenuDisposition");
-      },
+      onClick: () => {},
       menu: <MenuDisposition />,
     },
     {

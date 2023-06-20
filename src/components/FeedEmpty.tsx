@@ -6,6 +6,7 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useState } from "react";
 import slug from "slug";
 
+
 function FeedEmpty() {
   const [categories, setCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
