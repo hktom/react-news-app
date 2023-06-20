@@ -16,6 +16,7 @@ export interface IButtonProps {
   children: React.ReactNode;
   onClick: () => void;
   menu?: React.ReactNode;
+  sx?: any;
 }
 
 export const ToolBarButton = (props: IButtonProps) => {
@@ -34,7 +35,10 @@ export const ToolBarButton = (props: IButtonProps) => {
   return (
     <>
       <Tooltip title={title}>
-        <IconButton sx={{ mx: 0 }} onClick={props.menu ? handleClick : onClick}>
+        <IconButton
+          sx={props.sx ?? { mx: 0 }}
+          onClick={props.menu ? handleClick : onClick}
+        >
           {children}
         </IconButton>
       </Tooltip>

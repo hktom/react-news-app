@@ -14,6 +14,7 @@ import { apolloQuery } from "@/utils/apollo";
 import { ArticleFields } from "@/helpers/graphqlField";
 import { useRouter } from "next/router";
 import { fetchData } from "@/helpers/fetchData";
+import SimpleDialog from "@/components/dialog/MainDialog";
 
 interface IProps {
   children: React.ReactNode;
@@ -62,6 +63,7 @@ export default function MainLayout(props: IProps) {
           <SimpleBottomNavigation />
         </Box>
       </Box>
+      <SimpleDialog />
     </Box>
   );
 }

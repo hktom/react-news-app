@@ -14,11 +14,7 @@ export const dialogReducer: any = createSlice({
   name: "dialog",
   initialState,
   reducers: {
-    openDialog: (state, { payload }) => {
-      state.open = payload;
-    },
-
-    closeDialog: (state, { payload }) => {
+    toggle: (state, { payload }) => {
       state.open = payload;
     },
 

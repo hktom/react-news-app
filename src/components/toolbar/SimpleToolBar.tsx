@@ -22,7 +22,7 @@ function SimpleToolBar() {
     },
     {
       title: "Add to Read Later",
-      children: <BookmarkBorderIcon />,
+      children: <AccessTimeIcon />,
       onClick: () => {},
     },
     {
@@ -43,9 +43,14 @@ function SimpleToolBar() {
   ];
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", justifyContent: "flex-end", pr: 5 }}>
       {buttons.map((item, index) => (
-        <ToolBarButton key={index} title={item.title} onClick={item.onClick}>
+        <ToolBarButton
+          key={index}
+          title={item.title}
+          onClick={item.onClick}
+          sx={{ mx: 1 }}
+        >
           {item.children}
         </ToolBarButton>
       ))}
