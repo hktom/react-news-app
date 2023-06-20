@@ -26,12 +26,12 @@ function ArticleByStatus(props: IProps) {
 
       if (props.taxonomies) {
         query += `
-        GetArticleByTaxonomies(key:"${props.taxonomies!}"){ 
+        articlesBy:GetArticleByTaxonomies(key:"${props.taxonomies!}"){ 
           ${ArticleFields} 
         } 
         `;
       } else {
-        query += `getArticleBy(key:"${props.id}", value:"${props.value}"){ 
+        query += `articlesBy:getArticleBy(key:"${props.id}", value:"${props.value}"){ 
           ${ArticleFields} 
          } `;
       }
@@ -40,8 +40,8 @@ function ArticleByStatus(props: IProps) {
 
       const res = await apolloQuery(query);
 
-      if (res?.data?.getArticleBy) {
-        setData(res?.data?.getArticleBy);
+      if (res?.data?.articlesBy) {
+        setData(res?.data?.articlesBy);
       }
     } catch (e) {
       console.log(e);
