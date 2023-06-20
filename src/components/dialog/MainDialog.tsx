@@ -10,6 +10,7 @@ import ArticleSingle from "../ArticleSingle";
 import SettingUser from "../toolbar/SettingUser";
 import SettingTaxonomy from "../toolbar/SettingTaxonomy";
 import SettingFeed from "../toolbar/SettingFeed";
+import MobileMenu from "../MobileMenu";
 
 function SimpleDialog() {
   const state = useAppSelector((state: IReducer) => state);
@@ -41,6 +42,9 @@ function SimpleDialog() {
 
       case 5:
         return <SettingFeed />;
+
+      case 6:
+        return <MobileMenu />;
 
       default:
         return <></>;

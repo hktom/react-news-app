@@ -23,6 +23,7 @@ export default function MenuListItem(props: ILeftMenu) {
       onClick={() => {
         router.push(slug);
         dispatch({ type: "menu/setActiveMenu", payload: slug });
+        dispatch({ type: "dialog/toggle", payload: false });
       }}
     >
       <ListItemButton

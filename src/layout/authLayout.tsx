@@ -19,7 +19,7 @@ function AuthLayout(props: IProps) {
             justifyContent: "center",
           }}
         >
-          <Box sx={{ width: "54%", margin: "auto" }}>
+          <Box sx={{ maxWidth: { md: "28rem", xs: "90%" }, margin: "auto" }}>
             <Typography variant="h2" sx={{ textAlign: "center", my: 3 }}>
               {props.title}
             </Typography>
