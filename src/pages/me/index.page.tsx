@@ -21,10 +21,12 @@ function Index() {
           </>
         }
         page2={
-          <PageFeed
-            feeds={state.feed.exploreFeed}
-            loading={state.feed.loading}
-          />
+          <>
+            <PageFeed
+              feeds={state.feed.exploreFeed}
+              loading={state.feed.loading}
+            />
+          </>
         }
       />
     </MainLayout>

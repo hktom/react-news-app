@@ -59,8 +59,6 @@ export default function MainLayout(props: IProps) {
             </Box>
             {props.children}
           </Box>
-
-          <SimpleBottomNavigation />
         </Box>
       </Box>
       <SimpleDialog />

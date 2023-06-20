@@ -26,9 +26,9 @@ function CBlog(props: IProps) {
       <CardMedia
         component="img"
         sx={{
-          width: 200,
-          minWidth: 200,
-          height: 120,
+          width: { md: 200, xs: 100 },
+          minWidth: { md: 200, xs: 100 },
+          height: { md: 120, xs: 80 },
           borderRadius: "10px",
           mr: 2,
           objectFit: "cover",
@@ -51,9 +51,12 @@ function CBlog(props: IProps) {
           {props.ago && ` / ${props.ago} ago`}
         </Typography>
 
-        <Typography variant="body1" component="p" sx={{ fontSize: "0.85rem" }}>
-          {props.article?.description ?? "..."}
-        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          sx={{ fontSize: "0.85rem" }}
+          dangerouslySetInnerHTML={{ __html: props.article?.description ?? "" }}
+        ></Typography>
       </Box>
     </Box>
   );

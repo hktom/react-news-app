@@ -18,6 +18,7 @@ function CTitle(props: IProps) {
         alignItems: "flex-start",
         justifyContent: "space-between",
         cursor: "pointer",
+        flexDirection: { md: "row", xs: "column-reverse" },
         borderBottom: "1px solid #F6F7F8",
         mb: 1,
         "&:hover": {
@@ -29,7 +30,7 @@ function CTitle(props: IProps) {
       <Typography
         variant="body1"
         component="h2"
-        sx={{ maxWidth: "80%", fontWeight: "bold", pr: 2 }}
+        sx={{ maxWidth: { md: "80%", xs: "100%" }, fontWeight: "bold", pr: 2 }}
       >
         {props.article?.title}
       </Typography>

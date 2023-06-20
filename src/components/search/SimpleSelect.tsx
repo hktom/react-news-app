@@ -10,10 +10,11 @@ interface IProps {
   title: string;
   options: ITaxonomy[];
   onChange: (value: string) => void;
+  defaultValue?: string;
 }
 
 export default function SimpleSelect(props: IProps) {
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState(props.defaultValue || "");
 
   const handleChange = (event: SelectChangeEvent) => {
     setValue(event.target.value as string);
