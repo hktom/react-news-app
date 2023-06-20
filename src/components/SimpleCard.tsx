@@ -23,7 +23,7 @@ function SimpleCard(props: IProps) {
 
   const onClick = () => {
     dispatch({ type: "dialog/toggle", payload: true });
-    dispatch({ type: "dialog/changePage", payload: 1 });
+    dispatch({ type: "dialog/changePage", payload: 0 });
     dispatch({ type: "feed/showArticle", payload: props.article });
     
     const exceptFields = ["id", "read_later", "favorites", "already_read"];
