@@ -5,6 +5,7 @@ import { PersonAdd, Settings, Logout } from "@mui/icons-material";
 import {
   Avatar,
   Box,
+  CircularProgress,
   Divider,
   FormControl,
   FormControlLabel,
@@ -14,39 +15,58 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import Cookies from "js-cookie";
 import { useState } from "react";
 
 function MenuAccount() {
-  //   const state = useAppSelector((state: IReducer) => state.setting);
-  //   const dispositions = ["Title-Only View", "Cards View", "Magazine View"];
   const dispatch = useAppDispatch();
   const onClick = (page: number) => {
     dispatch({ type: "dialog/toggle", payload: true });
     dispatch({ type: "dialog/changePage", payload: page });
   };
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const logout = async () => {
+    if (loading) return;
+    setLoading(true);
+    try {
+      await apolloMutation(`mutation{
+        logout{
+          token
+          error
+          status
+        }
+      }`);
+    } catch (error) {
+    } finally {
+      setLoading(false);
+      Cookies.remove("token");
+      window.location.reload();
+    }
+  };
 
   return (
     <Box>
-      <MenuItem onClick={()=>onClick(1)}>
+      <MenuItem onClick={() => onClick(1)}>
         <Avatar /> My account
       </MenuItem>
       <Divider />
 
-      <MenuItem onClick={()=>onClick(2)}>
+      <MenuItem onClick={() => onClick(2)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Categories
       </MenuItem>
 
-      <MenuItem onClick={()=>onClick(3)}>
+      <MenuItem onClick={() => onClick(3)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Sources
       </MenuItem>
 
-      <MenuItem onClick={()=>onClick(4)}>
+      <MenuItem onClick={() => onClick(4)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
@@ -55,18 +75,18 @@ function MenuAccount() {
 
       <Divider />
 
-      <MenuItem onClick={()=>onClick(5)}>
+      <MenuItem onClick={() => onClick(5)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Settings
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem onClick={() => logout()}>
         <ListItemIcon>
           <Logout fontSize="small" />
         </ListItemIcon>
-        Logout
+        Logout {loading && <CircularProgress size={20} />}
       </MenuItem>
     </Box>
   );
