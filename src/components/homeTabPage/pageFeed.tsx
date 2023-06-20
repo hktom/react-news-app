@@ -33,7 +33,10 @@ function PageFeed(props: IProps) {
     <Box
       sx={{
         mt: 2,
-        maxWidth: state.setting?.disposition !== 0 ? "45rem" : "auto",
+        maxWidth: {
+          md: state.setting?.disposition !== 0 ? "45rem" : "auto",
+          xs: "100%",
+        },
       }}
     >
       {props.feeds.map((feed, index) => (

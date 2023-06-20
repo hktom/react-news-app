@@ -23,7 +23,7 @@ function CCard(props: IProps) {
     >
       <CardMedia
         component="img"
-        sx={{ width: "100%", height: 200, borderRadius: 2 }}
+        sx={{ width: "100%", height: { md: 200, xs: 300 }, borderRadius: 2 }}
         image={props.article?.image}
         alt={props.article?.title}
       />
@@ -42,9 +42,11 @@ function CCard(props: IProps) {
           {props.ago && ` / ${props.ago}`}
         </Typography>
 
-        <Typography variant="body1" component="p">
-          {props.article?.description ?? "..."}
-        </Typography>
+        <Typography
+          variant="body1"
+          component="p"
+          dangerouslySetInnerHTML={{ __html: props.article?.description ?? "" }}
+        ></Typography>
       </Box>
     </Box>
   );
