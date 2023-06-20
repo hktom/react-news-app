@@ -3,13 +3,15 @@ import SimpleSelect from "../search/SimpleSelect";
 import { apolloMutation } from "@/utils/apollo";
 import { ITaxonomy } from "@/utils/interface";
 import { useState } from "react";
-import { useAppSelector } from "@/utils/hooks";
+import { useAppDispatch, useAppSelector } from "@/utils/hooks";
 import { IReducer } from "@/utils/rootReducer";
+import { fetchData } from "@/helpers/fetchData";
 
 function SettingFeed() {
   const [loading, setLoading] = useState<boolean>(false);
   const [feedBy, setFeedBy] = useState<string>("");
   const state = useAppSelector((state: IReducer) => state.setting);
+  const dispatch = useAppDispatch();
 
   const changeSetting = async () => {
     setLoading(true);
@@ -25,6 +27,7 @@ function SettingFeed() {
       }`;
 
       await apolloMutation(query);
+      await fetchData(dispatch);
     } catch (error) {
     } finally {
       setLoading(false);
@@ -41,10 +44,15 @@ function SettingFeed() {
 
       <Box>
         <SimpleSelect
-          title="Sources"
-          options={[]}
+          title="Feed by"
+          defaultValue={state.feed_by || ""}
+          options={[
+            { id: "category", name: "Category" },
+            { id: "source", name: "Source" },
+            { id: "author", name: "Author" },
+          ]}
           onChange={(value) => {
-            console.log(value);
+            setFeedBy(value);
           }}
         />
         {/* <SimpleSelect title="Theme" options={[]} onChange={(value) => {}} /> */}
