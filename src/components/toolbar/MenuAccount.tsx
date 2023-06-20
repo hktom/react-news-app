@@ -18,31 +18,35 @@ import { useState } from "react";
 
 function MenuAccount() {
   //   const state = useAppSelector((state: IReducer) => state.setting);
-  const dispatch = useAppDispatch();
   //   const dispositions = ["Title-Only View", "Cards View", "Magazine View"];
+  const dispatch = useAppDispatch();
+  const onClick = (page: number) => {
+    dispatch({ type: "dialog/toggle", payload: true });
+    dispatch({ type: "dialog/changePage", payload: page });
+  };
 
   return (
     <Box>
-      <MenuItem>
+      <MenuItem onClick={()=>onClick(1)}>
         <Avatar /> My account
       </MenuItem>
       <Divider />
 
-      <MenuItem>
+      <MenuItem onClick={()=>onClick(2)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Categories
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem onClick={()=>onClick(3)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
         Sources
       </MenuItem>
 
-      <MenuItem>
+      <MenuItem onClick={()=>onClick(4)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>
@@ -51,7 +55,7 @@ function MenuAccount() {
 
       <Divider />
 
-      <MenuItem>
+      <MenuItem onClick={()=>onClick(5)}>
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>

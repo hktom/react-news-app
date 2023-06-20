@@ -7,6 +7,9 @@ import { Box, IconButton, useTheme } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import CloseIcon from "@mui/icons-material/Close";
 import ArticleSingle from "../ArticleSingle";
+import SettingUser from "../toolbar/SettingUser";
+import SettingTaxonomy from "../toolbar/SettingTaxonomy";
+import SettingFeed from "../toolbar/SettingFeed";
 
 function SimpleDialog() {
   const state = useAppSelector((state: IReducer) => state);
@@ -23,7 +26,21 @@ function SimpleDialog() {
     switch (state.dialog.page) {
       case 0:
         return <ArticleSingle />;
-        break;
+
+      case 1:
+        return <SettingUser />;
+
+      case 2:
+        return <SettingTaxonomy id="category" title="Catégories" />;
+
+      case 3:
+        return <SettingTaxonomy id="source" title="Sources" />;
+
+      case 4:
+        return <SettingTaxonomy id="author" title="Authors" />;
+
+      case 5:
+        return <SettingFeed />;
 
       default:
         return <></>;
@@ -33,7 +50,7 @@ function SimpleDialog() {
 
   return (
     <Dialog
-      maxWidth={"md"}
+      maxWidth={!state.dialog.page ? "md" : "xs"}
       fullWidth
       fullScreen={fullScreen}
       onClose={handleClose}

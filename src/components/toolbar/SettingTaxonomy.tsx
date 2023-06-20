@@ -22,18 +22,14 @@ function SettingTaxonomy(props: IProps) {
     setLoading(true);
     try {
       let query = `mutation {
-        taxonomyDelete(id:"${id}"){
+        deleteTaxonomy(id:"${id}"){
           id
         }
       }`;
 
       const res = await apolloMutation(query);
-      if (res?.data?.taxonomyDelete?.id) {
-        setData([
-          ...res?.data?.getUserTaxonomies.filter(
-            (item: ITaxonomy) => item.id !== id
-          ),
-        ]);
+      if (res?.data?.deleteTaxonomy?.id) {
+        setData([...data.filter((item: ITaxonomy) => item.id !== id)]);
       }
     } catch (error) {
     } finally {
@@ -68,7 +64,7 @@ function SettingTaxonomy(props: IProps) {
   }, []);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box sx={{ position: "relative", pb: 5 }}>
       {loading && (
         <Box
           sx={{
@@ -93,12 +89,10 @@ function SettingTaxonomy(props: IProps) {
           justifyContent: "center",
           alignItems: "center",
           flexDirection: "column",
-          minHeight: "50rem",
-          my: 10,
         }}
       >
         <Typography
-          variant="h4"
+          variant="h6"
           sx={{ fontWeight: 700, mb: 2, textAlign: "center" }}
         >
           {props.title}
@@ -127,7 +121,15 @@ function SettingTaxonomy(props: IProps) {
               onClick={() => {
                 deleteTaxonomy(item.id!);
               }}
-              sx={{ mx: 1, my: 1, width: "100%" }}
+              sx={{
+                mx: 1,
+                my: 1,
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                px: 2,
+                py: 1,
+              }}
               size="medium"
               endIcon={<DeleteIcon />}
             >

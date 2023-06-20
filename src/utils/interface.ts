@@ -81,5 +81,7 @@ export interface ITextField {
   type: "text" | "password" | "email";
   required?: boolean;
   sx?: any;
+  disabled?: boolean;
+  defaultValue?: string;
   
 }
